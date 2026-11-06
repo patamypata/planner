@@ -287,82 +287,11 @@
     text-shadow: 0 0 16px color-mix(in srgb, var(--accent) 40%, transparent);
   }
 
-  /* ═══════ 王家卫 ═══════ */
-  /* 白昼：一九六二年的走廊，旧墙绿、钨丝灯黄、旗袍红 */
-  body.theme-wang-day {
-    --bg1: #e7e0cf;
-    --bg2: #f3eee1;
-    --tint: rgba(122,90,52,.07);
-    --tint2: rgba(94,114,99,.06);
-    --card: rgba(255,251,242,.93);
-    --card-border: rgba(110,96,72,.28);
-    --text: #35302a;
-    --muted: #8f8574;
-    --accent: #5d7360;
-    --accent-deep: #43544a;
-    --gold: #a2452f;
-    --red: #b03a28;
-    --green: #5b7a54;
-    --orange: #b07a3a;
-    --sep: rgba(110,96,72,.22);
-    --input-bg: #fdfaf1;
-    --chip-bg: rgba(255,251,242,.9);
-    --bar-track: #e2dac8;
-    --nav-bg: rgba(255,251,242,.86);
-    --shadow-card: 0 1px 0 rgba(110,96,72,.12), 0 4px 14px rgba(53,48,42,.09);
-    --btn-grad: linear-gradient(160deg, #6d8470, #51665a);
-    --btn-color: #fbf7ec;
-    --gold-grad: linear-gradient(160deg, #b4533b, #8e3a26);
-    --gold-color: #fdf3e6;
-    --dlg-bg: linear-gradient(170deg, #fffdf5, #f1ead9);
-    --dlg-backdrop: rgba(35,30,24,.5);
-    --dlg-shadow: 0 10px 30px rgba(35,30,24,.28);
-    --heading-font: "Songti SC", "STSong", Georgia, "Times New Roman", serif;
-    --head-rule: 1px solid var(--card-border);
-  }
-  /* 夜晚：重庆森林的霓虹，暗棕底、青绿与橙红 */
-  body.theme-wang-night {
-    --bg1: #14120f;
-    --bg2: #1e1a15;
-    --tint: rgba(190,74,48,.08);
-    --tint2: rgba(96,150,124,.07);
-    --card: rgba(38,32,26,.85);
-    --card-border: rgba(210,180,140,.20);
-    --text: #e8ddc8;
-    --muted: #9d907a;
-    --accent: #7ea79b;
-    --accent-deep: #5f8271;
-    --gold: #c9603f;
-    --red: #d4705a;
-    --green: #9dbf8a;
-    --orange: #c9955a;
-    --sep: rgba(210,180,140,.15);
-    --input-bg: rgba(18,16,13,.72);
-    --chip-bg: rgba(18,16,13,.6);
-    --bar-track: rgba(18,16,13,.8);
-    --nav-bg: rgba(38,32,26,.6);
-    --shadow-card: 0 0 18px rgba(201,96,63,.05) inset, 0 3px 12px rgba(0,0,0,.4);
-    --btn-grad: linear-gradient(160deg, #8a5a42, #6a4230);
-    --btn-color: #f7e9d6;
-    --gold-grad: linear-gradient(160deg, #c9603f, #9a452b);
-    --gold-color: #1c1611;
-    --dlg-bg: linear-gradient(170deg, #2b241c, #1c1813);
-    --dlg-backdrop: rgba(6,5,4,.72);
-    --dlg-shadow: 0 0 28px rgba(201,96,63,.14);
-    --heading-font: "Songti SC", "STSong", Georgia, "Times New Roman", serif;
-    --head-rule: 1px solid var(--card-border);
-  }
-  body[class*="theme-wang"] header h1 { letter-spacing: 12px; font-weight: 400; }
-  body[class*="theme-wang"] .rune { font-family: Georgia, serif; letter-spacing: 5px; }
-  body[class*="theme-wang"] .card { border-radius: 5px; }
-  body[class*="theme-wang"] .entry .text { line-height: 1.85; letter-spacing: .4px; }
-  body[class*="theme-wang"] .up-item { border-left: 1px solid color-mix(in srgb, var(--gold) 45%, transparent); }
 
   body.theme-zelda-night input[type="date"],
   body[class*="theme-wes-night"] input[type="date"],
   body[class*="theme-madmen-night"] input[type="date"],
   body[class*="theme-lost-night"] input[type="date"],
-  body[class*="theme-wang-night"] input[type="date"] { color-scheme: dark; }
   input[type="date"] { color-scheme: light; }
 
   header {
@@ -549,49 +478,7 @@
   .up-date { font-size: 12px; color: var(--gold); margin: 6px 0 2px; letter-spacing: 1px; }
   .up-item { font-size: 13px; padding: 5px 0 5px 14px; color: var(--text); border-left: 1px solid color-mix(in srgb, var(--gold) 35%, transparent); margin-left: 4px; }
 
-  /* 宠物 */
-  .pet { display: flex; align-items: center; gap: 10px; padding: 11px 4px; border-bottom: 1px dashed var(--sep); }
-  .pet:last-child { border-bottom: none; }
-  .pet .avatar {
-    width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
-    background: color-mix(in srgb, var(--accent) 12%, transparent);
-    display: flex; align-items: center; justify-content: center; font-size: 19px;
-  }
-  .pet .info { flex: 1; min-width: 0; }
-  .pet .info .t { font-size: 14px; }
-  .pet .info .s { font-size: 11px; color: var(--muted); margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .pet .ico { color: var(--muted); cursor: pointer; font-size: 14px; padding: 2px 5px; flex-shrink: 0; }
-  .pet .ico:hover { color: var(--accent); }
-  .pet .ico.x:hover { color: var(--red); }
-  .care-block { padding: 11px 2px; border-bottom: 1px dashed var(--sep); }
-  .care-block:last-child { border-bottom: none; }
-  .care-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
-  .care-head .who { font-size: 13.5px; }
-  .care-head .today { font-size: 11px; color: var(--muted); letter-spacing: .5px; }
-  .care-acts { display: flex; gap: 6px; flex-wrap: wrap; }
-  .care-acts button {
-    border: 1px solid var(--card-border); background: var(--chip-bg); color: var(--text);
-    border-radius: 20px; padding: 5px 11px; font-size: 12px; cursor: pointer; transition: all .12s;
-  }
-  .care-acts button:hover { background: color-mix(in srgb, var(--accent) 14%, transparent); border-color: var(--accent); color: var(--accent); }
 
-  /* 股票 */
-  .stock { display: flex; align-items: center; gap: 8px; padding: 11px 4px; border-bottom: 1px dashed var(--sep); }
-  .stock:last-child { border-bottom: none; }
-  .stock .sinfo { flex: 1; min-width: 0; }
-  .stock .sinfo .t { font-size: 14px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-  .stock .code { font-size: 10px; color: var(--muted); border: 1px solid var(--sep); border-radius: 5px; padding: 0 4px; letter-spacing: 0; }
-  .stock .sinfo .s { font-size: 11px; color: var(--muted); margin-top: 3px; }
-  .stock .price { font-size: 14px; font-weight: 600; cursor: pointer; text-align: right; min-width: 56px; }
-  .stock .price:hover { color: var(--accent); }
-  .stock .pl { font-size: 12px; text-align: right; min-width: 82px; line-height: 1.4; }
-  .up { color: var(--red); }
-  .down { color: var(--green); }
-  .flat { color: var(--muted); }
-  .stock-sum { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .stock-sum .cell { padding: 10px 12px; border-radius: 10px; background: color-mix(in srgb, var(--accent) 7%, transparent); }
-  .stock-sum .cell .k { font-size: 11px; color: var(--muted); letter-spacing: 1px; }
-  .stock-sum .cell .v { font-size: 17px; font-weight: 700; margin-top: 4px; letter-spacing: 0; }
 
   dialog {
     border: 1px solid var(--card-border); border-radius: var(--radius); padding: 20px;
@@ -615,12 +502,12 @@
 /* 首帧前先上主题，避免闪色 */
 (function () {
   try {
-    var pref = localStorage.getItem("personal-planner-theme") || "wang";
+    var pref = localStorage.getItem("personal-planner-theme") || "zelda";
     var mode = localStorage.getItem("personal-planner-mode") || "auto";
     var h = new Date().getHours();
     var night = mode === "night" || (mode === "auto" && (h >= 18 || h < 6));
     document.body.className = "theme-" + pref + "-" + (night ? "night" : "day");
-  } catch (e) { document.body.className = "theme-wang-day"; }
+  } catch (e) { document.body.className = "theme-zelda-day"; }
 })();
 </script>
 
@@ -634,7 +521,6 @@
   <div class="stat"><div class="label" data-i18n="stat1">今日试炼</div><div class="value" id="statTasks">-</div></div>
   <div class="stat"><div class="label" data-i18n="stat2">今日支出</div><div class="value red" id="statSpend">-</div></div>
   <div class="stat"><div class="label" data-i18n="stat3">本月支出</div><div class="value red" id="statMonth">-</div></div>
-  <div class="stat"><div class="label" data-i18n="stat4">持仓盈亏</div><div class="value" id="statPL">-</div></div>
 </div>
 
 <nav class="tabs">
@@ -643,8 +529,6 @@
   <button data-tab="inspire" data-i18n="tabInspire">✦ 灵感</button>
   <button data-tab="money" data-i18n="tabMoney">💰 卢比</button>
   <button data-tab="diet" data-i18n="tabDiet">🍲 料理</button>
-  <button data-tab="pet" data-i18n="tabPet">🐈 猫</button>
-  <button data-tab="stock" data-i18n="tabStock">📈 涨跌</button>
   <button data-tab="stats" data-i18n="tabStats">📊 图鉴</button>
   <button data-tab="settings" data-i18n="tabSettings">⚙️ 存档</button>
 </nav>
@@ -755,69 +639,6 @@
     </div>
   </section>
 
-  <!-- 宠物 -->
-  <section id="tab-pet" style="display:none">
-    <div class="card">
-      <h2 data-i18n="petAddTitle">◆ 新的伙伴</h2>
-      <div class="row">
-        <input type="text" id="petName" data-i18n-ph="petNamePh" placeholder="名字" maxlength="20">
-        <select id="petType" style="flex:0 0 34%"></select>
-      </div>
-      <input type="text" id="petNote" data-i18n-ph="petNotePh" placeholder="品种／备注" style="margin-top:8px" maxlength="60">
-      <button class="btn" id="addPetBtn" data-i18n="addPet" style="margin-top:12px;width:100%">带回家</button>
-    </div>
-    <div class="card">
-      <h2><span data-i18n="petListTitle">◆ 屋里的</span> <span class="hint" id="petCount"></span></h2>
-      <div id="petList"></div>
-    </div>
-    <div class="card">
-      <h2><span data-i18n="careTitle">◆ 今日照料</span> <span class="hint" data-i18n="careHint">点一下就记下了</span></h2>
-      <div class="date-bar"><input type="date" id="careDate"></div>
-      <div id="careList"></div>
-    </div>
-    <div class="card">
-      <h2><span data-i18n="petLogTitle">◆ 照料流水</span> <span class="hint" id="petLogCount"></span></h2>
-      <div id="petLogList"></div>
-    </div>
-    <div class="card">
-      <h2><span data-i18n="weightTitle">◆ 体重</span> <span class="hint" id="weightPetName"></span></h2>
-      <div class="row">
-        <select id="weightPet" style="flex:0 0 46%"></select>
-        <input type="number" id="weightKg" data-i18n-ph="weightPh" placeholder="kg" step="0.01" min="0">
-        <button class="btn ghost" id="addWeightBtn" data-i18n="addWeight" style="flex:0 0 auto">称一下</button>
-      </div>
-      <div id="weightList" style="margin-top:6px"></div>
-    </div>
-  </section>
-
-  <!-- 股票 -->
-  <section id="tab-stock" style="display:none">
-    <div class="card">
-      <h2 data-i18n="stockAddTitle">◆ 记一笔仓</h2>
-      <div class="row">
-        <input type="text" id="stockName" data-i18n-ph="stockNamePh" placeholder="名称" maxlength="20">
-        <input type="text" id="stockCode" data-i18n-ph="stockCodePh" placeholder="代码" maxlength="12" style="flex:0 0 38%">
-      </div>
-      <div class="row" style="margin-top:8px">
-        <input type="number" id="stockShares" data-i18n-ph="stockSharesPh" placeholder="股数" step="1" min="0">
-        <input type="number" id="stockCost" data-i18n-ph="stockCostPh" placeholder="成本价" step="0.001" min="0">
-        <input type="number" id="stockPrice" data-i18n-ph="stockPricePh" placeholder="现价" step="0.001" min="0">
-      </div>
-      <button class="btn" id="addStockBtn" data-i18n="addStock" style="margin-top:12px;width:100%">记上</button>
-    </div>
-    <div class="card">
-      <h2><span data-i18n="stockSumTitle">◆ 总账</span> <span class="hint" id="stockSumText"></span></h2>
-      <div class="stock-sum" id="stockSum"></div>
-    </div>
-    <div class="card">
-      <h2><span data-i18n="stockListTitle">◆ 持仓</span> <span class="hint" id="stockCount"></span></h2>
-      <div id="stockList"></div>
-    </div>
-    <div class="card">
-      <h2 data-i18n="stockCurveTitle">◆ 这些日子的市值</h2>
-      <div id="stockCurve"></div>
-    </div>
-  </section>
 
   <!-- 统计 -->
   <section id="tab-stats" style="display:none">
@@ -914,57 +735,6 @@
 
   /* ═══════ 主题语言系统 ═══════ */
   var I18N = {
-    wang: {
-      title: "花样手帐", rune: "◆ ─── 一九六二 ／ 香港 ─── ◆",
-      stat1: "今日约定", stat2: "今日花销", stat3: "本月花销", stat4: "账户涨跌",
-      tabTodo: "🕰 约定", tabProgress: "🚬 独白", tabInspire: "🥫 罐头", tabMoney: "🪙 港币", tabDiet: "🍜 宵夜", tabPet: "🐈 猫", tabStock: "📈 涨跌", tabStats: "🎞 回望", tabSettings: "📻 唱片",
-      taskPh: "如果有多一个约定，你会不会来…", addTask: "记下",
-      listTitle: "◆ 这一日的约定", clickHint: "点一下名字，写下进展、为难处，和没说完的话",
-      upcomingTitle: "◆ 接下来的日子", upcomingHint: "未来十四天的约定",
-      listEmpty: "这一夜没有约定，只有雨声 🌧", upcomingEmpty: "接下来的日子还空着，像一条没走过的街 🌃",
-      detailTitle: "◆ 约定的细节", lblProgress: "走到哪了", lblDifficulty: "为难的地方", lblNote: "没说完的话",
-      dlgPhProgress: "今天走到哪一步…", dlgPhDifficulty: "卡在哪儿，是谁的问题…", dlgPhNote: "留一句话给自己",
-      btnSave: "记住", btnCancel: "算了", confirmYes: "就这样",
-      editEntry: "◆ 重写这一段", editName: "名字", editDate: "日期", editText: "内容", editMeal: "第几餐", editAmount: "数目", editCat: "类别", editType: "类型", editLink: "关联约定",
-      sumTitle: "◆ 那一夜", sumYd: "昨夜", sumTd: "今夜", sum2d: "前夜", sumPlans: "◆ 约定与了结", sumUn: "没有来", sumCarry: "带到明天", sumCarryAll: "全部带到明天", sumMoney: "◆ 花掉的钱", sumDiet: "◆ 吃了什么", sumPet: "◆ 屋里的它们", sumRecords: "◆ 独白", sumIdeas: "◆ 罐头", sumNone: "什么都没有",
-      logPh: "凌晨三点睡不着，就写点什么…", addLog: "说一句",
-      logTitle: "◆ 独白", logHint: "最近的写在上面", logEmpty: "还没有人说话 🚬",
-      ideaTitle: "🥫 一罐凤梨", ideaPh: "五月一日到期的凤梨罐头…",
-      ideaLinkLbl: "跟哪件约定有关（可以不选）", ideaLinkNone: "— 不关联，让它随风去 —", addIdea: "封进罐头",
-      ideaListTitle: "🥫 罐头架", ideaEmpty: "罐头架还是空的 🥫", ideaStandalone: "一个人的", ideaLinkPrefix: "🕰 ",
-      moneyTitle: "◆ 记一笔", moneyPhAmount: "多少 ¥", moneyPhNote: "花在哪儿了",
-      typeExpense: "花掉", typeIncome: "进来", saveExpense: "记上",
-      daySumTitle: "◆ 这一天的账", lblExpense: "花掉", lblIncome: "进来", detailTitle2: "◆ 账目", expenseEmpty: "今天没花钱 🪙",
-      stats1: "◆ 这个月花在哪儿", stats2: "◆ 最近七天的花销", stats3: "◆ 约定完成（近七天）",
-      statsNone: "没有约定", statsMonthEmpty: "这个月一分没动",
-      themeTitle: "◆ 色调", themeHint: "「自动」在 18:00 与 6:00 之间为白天", saveTitle: "◆ 唱片柜",
-      saveDesc: "东西都存在这台机器的唱片柜里。换一台，先「刻一张」，再「放进去」。",
-      exportBtn: "📤 刻一张", importBtn: "📥 放进去", dangerTitle: "◆ 别碰这里", clearBtn: "全部擦掉",
-      foot: "IN THE MOOD FOR LOVE · 1962 ◆ 数据只在这台机器", filePrefix: "花样手帐",
-      confirmDelTask: "这条约定要忘掉吗？（连同那些话）",
-      confirmDelLog: "这段独白不留下了？", confirmDelIdea: "这罐罐头要扔？", confirmDelExpense: "这笔账划掉？",
-      confirmImport: "放进去会盖掉现在所有的东西，确定？", importBad: "这张唱片不对，放不进去",
-      confirmClear: "所有东西都会消失，再也找不回来。确定？",
-      ideaNeed: "先说一句 🥫", amountBad: "数目不对",
-      tabDiet: "🍜 宵夜", dietTitle: "◆ 今晚吃了什么", dietPh: "云吞面，还是那碗一直没吃完的…", addDiet: "吃",
-      dietListTitle: "◆ 吃过的", dietEmpty: "还没吃东西 🍜", confirmDelDiet: "这顿不算了？",
-      /* —— 宠物 —— */
-      petAddTitle: "◆ 屋里多一只", petNamePh: "叫什么名字", petNotePh: "品种，或者一句话", addPet: "带回家",
-      petListTitle: "◆ 屋里的", petEmpty: "屋子还很静，没有脚步声 🐾",
-      careTitle: "◆ 今日照料", careEmpty: "先带一只回来吧 🐾", careHint: "点一下就记下了",
-      petLogTitle: "◆ 照料流水", petLogEmpty: "今天还没人理它",
-      confirmDelPet: "让它走？（连同照料与体重记录）", confirmDelPetLog: "这条不算了？",
-      weightTitle: "◆ 体重", weightPh: "kg", addWeight: "称一下", weightEmpty: "还没称过",
-      editPet: "◆ 改一改", editBirth: "生日",
-      care_feed: "喂饭", care_water: "换水", care_litter: "铲屎", care_walk: "遛弯", care_play: "陪玩", care_med: "用药", care_bath: "洗澡",
-      /* —— 股票 —— */
-      stockAddTitle: "◆ 记一笔仓", stockNamePh: "名字", stockCodePh: "代码", stockSharesPh: "股数", stockCostPh: "成本价", stockPricePh: "现价", addStock: "记上",
-      stockSumTitle: "◆ 总账", stockMV: "市值", stockCostLbl: "成本", stockPL: "浮动盈亏", stockPLRate: "幅度",
-      stockListTitle: "◆ 持仓", stockEmpty: "空仓，什么都没拿",
-      stockCurveTitle: "◆ 这些日子的市值", stockCurveEmpty: "再等一天，才有曲线",
-      confirmDelStock: "清掉这一笔？", priceNeed: "现价不对", sharesBad: "股数不对",
-      editStock: "◆ 改一改这一笔", editShares: "股数", editCost: "成本价", editPrice: "现价", editCode: "代码"
-    },
     zelda: {
       title: "冒险手帐", rune: "◆ ─── 縁 ／ 錄 ─── ◆",
       stat1: "今日试炼", stat2: "今日支出", stat3: "本月支出",
@@ -998,23 +768,7 @@
       confirmClear: "将删除全部试炼、日志、灵感与卢比记录，且无法恢复！确定清空？",
       ideaNeed: "先写下灵感内容 ✦", amountBad: "请输入正确的金额",
       tabDiet: "🍲 料理", dietTitle: "◆ 今天的料理", dietPh: "今天吃了什么？烤苹果还是兽肉饭…", addDiet: "下锅",
-      dietListTitle: "◆ 料理账", dietEmpty: "今天还没开火 🍲", confirmDelDiet: "倒掉这道料理？",
-      stat4: "随行收益", themeHint: "「自动」在 18:00 与 6:00 之间为白天", sumPet: "◆ 伙伴照料",
-      tabPet: "🐴 伙伴", tabStock: "💠 宝库",
-      petAddTitle: "◆ 新的伙伴", petNamePh: "给它起个名字", petNotePh: "品种，或一句寄语", addPet: "结伴同行",
-      petListTitle: "◆ 同行伙伴", petEmpty: "还没有伙伴同行 🐾",
-      careTitle: "◆ 今日照料", careEmpty: "先去寻一位伙伴吧 🐾", careHint: "轻点即记录",
-      petLogTitle: "◆ 照料札记", petLogEmpty: "今天还没有照料记录",
-      confirmDelPet: "让这位伙伴离去？（含照料与体重）", confirmDelPetLog: "删除这条照料记录？",
-      weightTitle: "◆ 体重石碑", weightPh: "kg", addWeight: "刻下", weightEmpty: "还没有称量记录",
-      editPet: "◆ 修改伙伴", editBirth: "生日",
-      care_feed: "喂食", care_water: "换水", care_litter: "清理", care_walk: "散步", care_play: "玩耍", care_med: "用药", care_bath: "洗浴",
-      stockAddTitle: "◆ 记一件宝物", stockNamePh: "名称", stockCodePh: "编号", stockSharesPh: "数量", stockCostPh: "成本", stockPricePh: "现价", addStock: "入库",
-      stockSumTitle: "◆ 宝库总账", stockMV: "市值", stockCostLbl: "成本", stockPL: "盈亏", stockPLRate: "幅度",
-      stockListTitle: "◆ 宝库清单", stockEmpty: "宝库空空 💠",
-      stockCurveTitle: "◆ 宝库市值走势", stockCurveEmpty: "还需几日才有走势",
-      confirmDelStock: "移出这件宝物？", priceNeed: "请输入正确的现价", sharesBad: "请输入正确的数量",
-      editStock: "◆ 修改宝物", editShares: "数量", editCost: "成本", editPrice: "现价", editCode: "编号"
+      dietListTitle: "◆ 料理账", dietEmpty: "今天还没开火 🍲", confirmDelDiet: "倒掉这道料理？", themeHint: "「自动」在 18:00 与 6:00 之间为白天"
     },
     wes: {
       title: "门童手记", rune: "◆ ─── MENDEL ／ 1932 ─── ◆",
@@ -1049,23 +803,7 @@
       confirmClear: "全部行李将清空且无法找回！确定？",
       ideaNeed: "先写明信片内容 ✉️", amountBad: "请输入正确的金额",
       tabDiet: "🥐 茶点", dietTitle: "◆ 今天的茶点", dietPh: "今天享用了什么？可颂还是马卡龙…", addDiet: "上桌",
-      dietListTitle: "◆ 茶点记录", dietEmpty: "今天还没用茶点 🥐", confirmDelDiet: "撤下这碟茶点？",
-      stat4: "今日行情", themeHint: "「自动」在 18:00 与 6:00 之间为白天", sumPet: "◆ 住客照料",
-      tabPet: "🐩 住客", tabStock: "🏦 金库",
-      petAddTitle: "◆ 新住客登记", petNamePh: "住客姓名", petNotePh: "品种／备注", addPet: "办理入住",
-      petListTitle: "◆ 住客名册", petEmpty: "名册上还没有住客 🐾",
-      careTitle: "◆ 今日客房服务", careEmpty: "先登记一位住客 🐾", careHint: "轻点即登记",
-      petLogTitle: "◆ 服务记录", petLogEmpty: "今天还没有服务记录",
-      confirmDelPet: "为这位住客办理退房？（含记录）", confirmDelPetLog: "划掉这条服务记录？",
-      weightTitle: "◆ 体重登记", weightPh: "kg", addWeight: "登记", weightEmpty: "尚无登记",
-      editPet: "◆ 修改住客", editBirth: "生日",
-      care_feed: "供餐", care_water: "换水", care_litter: "打扫", care_walk: "散步", care_play: "陪玩", care_med: "送药", care_bath: "沐浴",
-      stockAddTitle: "◆ 金库入库", stockNamePh: "名称", stockCodePh: "编号", stockSharesPh: "份数", stockCostPh: "成本", stockPricePh: "现价", addStock: "入库",
-      stockSumTitle: "◆ 金库总账", stockMV: "估值", stockCostLbl: "成本", stockPL: "盈亏", stockPLRate: "幅度",
-      stockListTitle: "◆ 金库清单", stockEmpty: "金库空空 🏦",
-      stockCurveTitle: "◆ 金库估值走势", stockCurveEmpty: "还需几日才有走势",
-      confirmDelStock: "出库这一笔？", priceNeed: "请输入正确的现价", sharesBad: "请输入正确的份数",
-      editStock: "◆ 修改一笔", editShares: "份数", editCost: "成本", editPrice: "现价", editCode: "编号"
+      dietListTitle: "◆ 茶点记录", dietEmpty: "今天还没用茶点 🥐", confirmDelDiet: "撤下这碟茶点？", themeHint: "「自动」在 18:00 与 6:00 之间为白天"
     },
     madmen: {
       title: "麦迪逊手帐", rune: "◆ ─── MADISON ／ AVE. ─── ◆",
@@ -1100,23 +838,7 @@
       confirmClear: "全部档案将销毁且无法恢复！确定？",
       ideaNeed: "先写下点子 💡", amountBad: "请输入正确的金额",
       tabDiet: "🍽️ 应酬", dietTitle: "◆ 今天吃了什么", dietPh: "牛排还是三明治？还是又一杯…", addDiet: "记录",
-      dietListTitle: "◆ 餐桌纪要", dietEmpty: "今天还没吃饭 🍽️", confirmDelDiet: "撤掉这道菜？",
-      stat4: "账户表现", themeHint: "「自动」在 18:00 与 6:00 之间为白天", sumPet: "◆ 家里",
-      tabPet: "🐕 家里", tabStock: "📈 行情",
-      petAddTitle: "◆ 添个家庭成员", petNamePh: "名字", petNotePh: "品种／备注", addPet: "登记",
-      petListTitle: "◆ 家庭成员", petEmpty: "家里还没有宠物 🐾",
-      careTitle: "◆ 今日照料", careEmpty: "先登记一只 🐾", careHint: "点一下即记录",
-      petLogTitle: "◆ 照料记录", petLogEmpty: "今天还没有记录",
-      confirmDelPet: "把这位家庭成员送走？（含记录）", confirmDelPetLog: "划掉这条记录？",
-      weightTitle: "◆ 体重", weightPh: "kg", addWeight: "记录", weightEmpty: "还没有记录",
-      editPet: "◆ 修改档案", editBirth: "生日",
-      care_feed: "喂食", care_water: "换水", care_litter: "清理", care_walk: "遛弯", care_play: "陪玩", care_med: "用药", care_bath: "洗澡",
-      stockAddTitle: "◆ 建仓", stockNamePh: "名称", stockCodePh: "代码", stockSharesPh: "股数", stockCostPh: "成本价", stockPricePh: "现价", addStock: "入账",
-      stockSumTitle: "◆ 持仓总账", stockMV: "市值", stockCostLbl: "成本", stockPL: "浮动盈亏", stockPLRate: "幅度",
-      stockListTitle: "◆ 持仓明细", stockEmpty: "空仓，手里没票",
-      stockCurveTitle: "◆ 市值走势", stockCurveEmpty: "再等一天才有曲线",
-      confirmDelStock: "清掉这一笔？", priceNeed: "请输入正确的现价", sharesBad: "请输入正确的股数",
-      editStock: "◆ 修改持仓", editShares: "股数", editCost: "成本价", editPrice: "现价", editCode: "代码"
+      dietListTitle: "◆ 餐桌纪要", dietEmpty: "今天还没吃饭 🍽️", confirmDelDiet: "撤掉这道菜？", themeHint: "「自动」在 18:00 与 6:00 之间为白天"
     },
     lost: {
       title: "蓝调时刻", rune: "◆ ─── TOKYO ／ 25:00 ─── ◆",
@@ -1151,28 +873,11 @@
       confirmClear: "保险箱将被清空且无法恢复！确定？",
       ideaNeed: "先写一句吧 🥃", amountBad: "请输入正确的金额",
       tabDiet: "🍜 拉面", dietTitle: "◆ 今天吃了什么", dietPh: "拉面、饭团，还是便利店的关东煮…", addDiet: "开动",
-      dietListTitle: "◆ 进食记录", dietEmpty: "胃还空着 🍜", confirmDelDiet: "清掉这条记录？",
-      stat4: "账户起落", themeHint: "「自动」在 18:00 与 6:00 之间为白天", sumPet: "◆ 房间里的",
-      tabPet: "🐈 猫", tabStock: "📉 行情",
-      petAddTitle: "◆ 多一只", petNamePh: "名字", petNotePh: "品种，或者一句话", addPet: "带回来",
-      petListTitle: "◆ 房间里的", petEmpty: "房间很静 🐾",
-      careTitle: "◆ 今日照顾", careEmpty: "先带一只回来 🐾", careHint: "点一下就好",
-      petLogTitle: "◆ 照顾记录", petLogEmpty: "今天还没有记录",
-      confirmDelPet: "让它走？（含记录）", confirmDelPetLog: "删掉这条？",
-      weightTitle: "◆ 体重", weightPh: "kg", addWeight: "记下", weightEmpty: "还没称过",
-      editPet: "◆ 改一下", editBirth: "生日",
-      care_feed: "喂食", care_water: "换水", care_litter: "清理", care_walk: "散步", care_play: "玩耍", care_med: "用药", care_bath: "洗澡",
-      stockAddTitle: "◆ 记一笔", stockNamePh: "名称", stockCodePh: "代码", stockSharesPh: "股数", stockCostPh: "成本价", stockPricePh: "现价", addStock: "记下",
-      stockSumTitle: "◆ 总账", stockMV: "市值", stockCostLbl: "成本", stockPL: "浮动盈亏", stockPLRate: "幅度",
-      stockListTitle: "◆ 持仓", stockEmpty: "空仓，什么都没有",
-      stockCurveTitle: "◆ 这些天的市值", stockCurveEmpty: "再等一天",
-      confirmDelStock: "清掉这笔？", priceNeed: "现价不对", sharesBad: "股数不对",
-      editStock: "◆ 改一笔", editShares: "股数", editCost: "成本价", editPrice: "现价", editCode: "代码"
+      dietListTitle: "◆ 进食记录", dietEmpty: "胃还空着 🍜", confirmDelDiet: "清掉这条记录？", themeHint: "「自动」在 18:00 与 6:00 之间为白天"
     }
   };
 
   var THEMES = [
-    { id: "wang",   label: "🚬 王家卫" },
     { id: "zelda",  label: "⚔️ 塞尔达传说" },
     { id: "wes",    label: "🎀 韦斯·安德森" },
     { id: "madmen", label: "🥃 广告狂人" },
@@ -1184,7 +889,7 @@
     { id: "auto", label: "🌗 自动（18:00 切换）" }
   ];
 
-  function getThemePref() { return localStorage.getItem(THEME_KEY) || "wang"; }
+  function getThemePref() { return localStorage.getItem(THEME_KEY) || "zelda"; }
   function getModePref() { return localStorage.getItem(MODE_KEY) || "auto"; }
   function isNight() {
     var mode = getModePref();
@@ -1234,7 +939,7 @@
 
   var today = fmtDate(new Date());
   var state = load();
-  var ui = { tab: "todo", todoDate: today, progressDate: today, expenseDate: today, expenseCat: "food", dietDate: today, dietMeal: "早餐", careDate: today };
+  var ui = { tab: "todo", todoDate: today, progressDate: today, expenseDate: today, expenseCat: "food", dietDate: today, dietMeal: "早餐" };
 
   function load() {
     try {
@@ -1246,12 +951,7 @@
           progress: s.progress || [],
           expenses: s.expenses || [],
           ideas: s.ideas || [],
-          diet: s.diet || [],
-          pets: s.pets || [],
-          petLogs: s.petLogs || [],
-          weights: s.weights || [],
-          stocks: s.stocks || [],
-          snaps: s.snaps || []
+          diet: s.diet || []
         };
       }
       /* 兼容迁移 v1 数据 */
@@ -1268,12 +968,11 @@
           progress: o.progress || [],
           expenses: o.expenses || [],
           ideas: [],
-          diet: [],
-          pets: [], petLogs: [], weights: [], stocks: [], snaps: []
+          diet: []
         };
       }
     } catch (e) { /* 损坏则重置 */ }
-    return { tasks: [], progress: [], expenses: [], ideas: [], diet: [], pets: [], petLogs: [], weights: [], stocks: [], snaps: [] };
+    return { tasks: [], progress: [], expenses: [], ideas: [], diet: [] };
   }
   function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
   function fmtDate(d) {
@@ -1317,17 +1016,6 @@
 
   var MEALS = ["早餐", "午餐", "晚餐", "宵夜", "其他"];
 
-  var PET_TYPES = [
-    { id: "cat",  icon: "🐈", name: "猫" },
-    { id: "dog",  icon: "🐕", name: "狗" },
-    { id: "bird", icon: "🕊️", name: "鸟" },
-    { id: "fish", icon: "🐟", name: "鱼" },
-    { id: "other",icon: "🐾", name: "其他" }
-  ];
-  var petTypeMap = {};
-  PET_TYPES.forEach(function (p) { petTypeMap[p.id] = p; });
-  var CARE_ACTS = ["feed", "water", "litter", "walk", "play", "med", "bath"];
-  var CARE_ICON = { feed: "🍚", water: "💧", litter: "🧹", walk: "🚶", play: "🎾", med: "💊", bath: "🛁" };
 
   var weekNames = ["日", "一", "二", "三", "四", "五", "六"];
   var now = new Date();
@@ -1341,13 +1029,11 @@
       tabs.forEach(function (b) { b.classList.remove("active"); });
       btn.classList.add("active");
       ui.tab = btn.dataset.tab;
-      ["todo", "progress", "inspire", "money", "diet", "pet", "stock", "stats", "settings"].forEach(function (t) {
+      ["todo", "progress", "inspire", "money", "diet", "stats", "settings"].forEach(function (t) {
         $("tab-" + t).style.display = t === ui.tab ? "" : "none";
       });
       if (ui.tab === "stats") renderStats();
       if (ui.tab === "inspire") renderIdeaLinkSelect();
-      if (ui.tab === "pet") renderPetAll();
-      if (ui.tab === "stock") renderStockAll();
     });
   });
 
@@ -1701,303 +1387,6 @@
     });
   });
 
-  /* ---------- 宠物 ---------- */
-  function uid() { return Date.now() + "" + Math.floor(Math.random() * 1e4); }
-  function nowTime() { return new Date().toLocaleTimeString("zh-CN", { hour12: false }).slice(0, 5); }
-  function ageText(birth) {
-    if (!birth) return "";
-    var b = new Date(String(birth).replace(/-/g, "/"));
-    if (isNaN(b.getTime())) return "";
-    var n = new Date();
-    var m = (n.getFullYear() - b.getFullYear()) * 12 + (n.getMonth() - b.getMonth());
-    if (m < 0) return "";
-    if (m < 12) return m + " 个月";
-    return Math.floor(m / 12) + " 岁" + (m % 12 ? " " + (m % 12) + " 个月" : "");
-  }
-
-  $("careDate").value = today;
-  $("careDate").addEventListener("change", function () { ui.careDate = this.value || today; renderCare(); });
-
-  function renderPetSelects() {
-    $("petType").innerHTML = PET_TYPES.map(function (p) {
-      return '<option value="' + p.id + '">' + p.icon + " " + p.name + "</option>";
-    }).join("");
-    var keep = $("weightPet").value;
-    $("weightPet").innerHTML = state.pets.length ? state.pets.map(function (p) {
-      var tp = petTypeMap[p.type] || petTypeMap.other;
-      return '<option value="' + p.id + '">' + tp.icon + " " + esc(p.name) + "</option>";
-    }).join("") : '<option value="">—</option>';
-    if (keep) $("weightPet").value = keep;
-  }
-
-  $("addPetBtn").addEventListener("click", function () {
-    var name = $("petName").value.trim();
-    if (!name) return;
-    state.pets.push({ id: uid(), name: name, type: $("petType").value || "cat", birth: "", note: $("petNote").value.trim() });
-    $("petName").value = ""; $("petNote").value = "";
-    save(); renderPetAll();
-  });
-
-  function renderPets() {
-    $("petCount").textContent = state.pets.length ? "共 " + state.pets.length + " 位" : "";
-    if (!state.pets.length) {
-      $("petList").innerHTML = '<div class="empty">' + T("petEmpty") + "</div>";
-      return;
-    }
-    $("petList").innerHTML = state.pets.map(function (p) {
-      var tp = petTypeMap[p.type] || petTypeMap.other;
-      var meta = [tp.name, ageText(p.birth), p.note].filter(function (x) { return !!x; }).join(" · ");
-      return '<div class="pet"><div class="avatar">' + tp.icon + "</div>" +
-        '<div class="info"><div class="t">' + esc(p.name) + '</div><div class="s">' + esc(meta) + "</div></div>" +
-        '<span class="ico" data-pedit="' + p.id + '">✎</span>' +
-        '<span class="ico x" data-pdel="' + p.id + '">✕</span></div>';
-    }).join("");
-  }
-
-  function renderCare() {
-    if (!state.pets.length) {
-      $("careList").innerHTML = '<div class="empty">' + T("careEmpty") + "</div>";
-      return;
-    }
-    $("careList").innerHTML = state.pets.map(function (p) {
-      var tp = petTypeMap[p.type] || petTypeMap.other;
-      var logs = state.petLogs.filter(function (l) { return l.petId === p.id && l.date === ui.careDate; });
-      var tally = {};
-      logs.forEach(function (l) { tally[l.act] = (tally[l.act] || 0) + 1; });
-      var sum = CARE_ACTS.filter(function (a) { return tally[a]; }).map(function (a) {
-        return CARE_ICON[a] + T("care_" + a) + "×" + tally[a];
-      }).join(" ");
-      return '<div class="care-block"><div class="care-head">' +
-        '<span class="who">' + tp.icon + " " + esc(p.name) + "</span>" +
-        '<span class="today">' + (sum || "—") + "</span></div>" +
-        '<div class="care-acts">' + CARE_ACTS.map(function (a) {
-          return '<button data-care="' + p.id + "-" + a + '">' + CARE_ICON[a] + " " + T("care_" + a) + "</button>";
-        }).join("") + "</div></div>";
-    }).join("");
-  }
-
-  $("careList").addEventListener("click", function (e) {
-    var v = e.target.dataset && e.target.dataset.care;
-    if (!v) return;
-    var idx = v.lastIndexOf("-");
-    var petId = v.slice(0, idx), act = v.slice(idx + 1);
-    state.petLogs.push({ id: uid(), petId: petId, act: act, date: ui.careDate, time: nowTime() });
-    save(); renderCare(); renderPetLogs(); renderSum();
-  });
-
-  function renderPetLogs() {
-    var list = state.petLogs.slice().sort(function (a, b) { return b.id.localeCompare(a.id); });
-    $("petLogCount").textContent = list.length ? "共 " + list.length + " 次" : "";
-    if (!list.length) {
-      $("petLogList").innerHTML = '<div class="empty">' + T("petLogEmpty") + "</div>";
-      return;
-    }
-    $("petLogList").innerHTML = list.slice(0, 60).map(function (l) {
-      var p = null;
-      state.pets.forEach(function (x) { if (x.id === l.petId) p = x; });
-      var tp = p ? (petTypeMap[p.type] || petTypeMap.other) : petTypeMap.other;
-      return '<div class="summary-line"><span>' + tp.icon + " " + esc(p ? p.name : "—") +
-        " · " + CARE_ICON[l.act] + T("care_" + l.act) + "</span>" +
-        '<span style="display:flex;align-items:center;gap:6px">' + esc(l.date.slice(5)) + " " + esc(l.time) +
-        '<span class="del" data-pdel2="' + l.id + '">✕</span></span></div>';
-    }).join("");
-  }
-
-  $("petList").addEventListener("click", function (e) {
-    var ds = e.target.dataset || {};
-    if (ds.pedit) { openEdit("pet", ds.pedit); return; }
-    if (ds.pdel) {
-      confirmBox(T("confirmDelPet"), function () {
-        state.pets = state.pets.filter(function (p) { return p.id !== ds.pdel; });
-        state.petLogs = state.petLogs.filter(function (l) { return l.petId !== ds.pdel; });
-        state.weights = state.weights.filter(function (w) { return w.petId !== ds.pdel; });
-        save(); renderPetAll();
-      });
-    }
-  });
-  $("petLogList").addEventListener("click", function (e) {
-    var id = e.target.dataset && e.target.dataset.pdel2;
-    if (!id) return;
-    confirmBox(T("confirmDelPetLog"), function () {
-      state.petLogs = state.petLogs.filter(function (l) { return l.id !== id; });
-      save(); renderCare(); renderPetLogs();
-    });
-  });
-
-  $("addWeightBtn").addEventListener("click", function () {
-    var petId = $("weightPet").value;
-    var kg = parseFloat($("weightKg").value);
-    if (!petId) return;
-    if (!kg || kg <= 0) { alert(T("amountBad")); return; }
-    state.weights.push({ id: uid(), petId: petId, date: ui.careDate, kg: Math.round(kg * 100) / 100 });
-    $("weightKg").value = "";
-    save(); renderWeights();
-  });
-
-  function renderWeights() {
-    var asc = state.weights.slice().sort(function (a, b) { return (a.date + a.id).localeCompare(b.date + b.id); });
-    var prev = {}, rows = [];
-    asc.forEach(function (w) {
-      var d = prev[w.petId] == null ? null : w.kg - prev[w.petId];
-      prev[w.petId] = w.kg;
-      rows.push({ w: w, d: d });
-    });
-    $("weightPetName").textContent = rows.length ? "共 " + rows.length + " 次" : "";
-    if (!rows.length) {
-      $("weightList").innerHTML = '<div class="empty" style="padding:10px 0">' + T("weightEmpty") + "</div>";
-      return;
-    }
-    $("weightList").innerHTML = rows.reverse().slice(0, 30).map(function (r) {
-      var p = null;
-      state.pets.forEach(function (x) { if (x.id === r.w.petId) p = x; });
-      var tp = p ? (petTypeMap[p.type] || petTypeMap.other) : petTypeMap.other;
-      var delta = r.d == null ? "" : (r.d > 0 ? " ▲" : r.d < 0 ? " ▼" : " —") + Math.abs(r.d).toFixed(2);
-      return '<div class="summary-line"><span>' + tp.icon + " " + esc(p ? p.name : "—") + "</span>" +
-        '<span style="display:flex;align-items:center;gap:6px">' + esc(r.w.date.slice(5)) + " · " +
-        '<b>' + r.w.kg.toFixed(2) + " kg</b>" +
-        (delta ? '<span class="' + (r.d > 0 ? "up" : "down") + '">' + delta + "</span>" : "") +
-        '<span class="del" data-wdel="' + r.w.id + '">✕</span></span></div>';
-    }).join("");
-  }
-  $("weightList").addEventListener("click", function (e) {
-    var id = e.target.dataset && e.target.dataset.wdel;
-    if (!id) return;
-    state.weights = state.weights.filter(function (w) { return w.id !== id; });
-    save(); renderWeights();
-  });
-
-  function renderPetAll() {
-    renderPetSelects();
-    renderPets();
-    renderCare();
-    renderPetLogs();
-    renderWeights();
-  }
-
-  /* ---------- 股票 ---------- */
-  function stockTotals() {
-    var mv = 0, cost = 0;
-    state.stocks.forEach(function (s) {
-      mv += (s.shares || 0) * (s.price || 0);
-      cost += (s.shares || 0) * (s.cost || 0);
-    });
-    return { mv: mv, cost: cost, pl: mv - cost, rate: cost ? (mv - cost) / cost * 100 : 0 };
-  }
-  function upDown(n) { return n > 0.005 ? "up" : (n < -0.005 ? "down" : "flat"); }
-  function fmtSigned(n) { return (n > 0.005 ? "+" : n < -0.005 ? "−" : "") + fmtMoney(Math.abs(n)); }
-  function fmtShort(n) {
-    var a = Math.abs(n);
-    if (a >= 100000) return (n / 10000).toFixed(1) + "万";
-    if (a >= 1000) return Number(Math.round(n)).toLocaleString("zh-CN");
-    return Number(n.toFixed(2)).toLocaleString("zh-CN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  }
-  function fmtShares(n) { return Number(n).toLocaleString("zh-CN"); }
-
-  function snapshotToday() {
-    if (!state.stocks.length) {
-      state.snaps = state.snaps.filter(function (s) { return s.date !== today; });
-      return;
-    }
-    var t = stockTotals();
-    var found = false;
-    state.snaps.forEach(function (s) {
-      if (s.date === today) {
-        s.mv = Math.round(t.mv * 100) / 100;
-        s.cost = Math.round(t.cost * 100) / 100;
-        found = true;
-      }
-    });
-    if (!found) {
-      state.snaps.push({ date: today, mv: Math.round(t.mv * 100) / 100, cost: Math.round(t.cost * 100) / 100 });
-    }
-  }
-
-  $("addStockBtn").addEventListener("click", function () {
-    var name = $("stockName").value.trim();
-    var shares = parseFloat($("stockShares").value);
-    var cost = parseFloat($("stockCost").value);
-    var price = parseFloat($("stockPrice").value);
-    if (!name) return;
-    if (!shares || shares <= 0) { alert(T("sharesBad")); return; }
-    if (!cost || cost < 0) { alert(T("priceNeed")); return; }
-    state.stocks.push({
-      id: uid(), name: name, code: $("stockCode").value.trim(),
-      shares: Math.round(shares * 100) / 100,
-      cost: Math.round(cost * 1000) / 1000,
-      price: Math.round((isNaN(price) ? cost : price) * 1000) / 1000
-    });
-    $("stockName").value = ""; $("stockCode").value = "";
-    $("stockShares").value = ""; $("stockCost").value = ""; $("stockPrice").value = "";
-    snapshotToday();
-    save(); renderStockAll(); renderHeaderStats();
-  });
-
-  function renderStockSum() {
-    var t = stockTotals();
-    $("stockSumText").textContent = state.stocks.length ? state.stocks.length + " 笔" : "";
-    $("stockSum").innerHTML =
-      '<div class="cell"><div class="k">' + T("stockMV") + '</div><div class="v">' + fmtMoney(t.mv) + "</div></div>" +
-      '<div class="cell"><div class="k">' + T("stockCostLbl") + '</div><div class="v">' + fmtMoney(t.cost) + "</div></div>" +
-      '<div class="cell"><div class="k">' + T("stockPL") + '</div><div class="v ' + upDown(t.pl) + '">' + fmtSigned(t.pl) + "</div></div>" +
-      '<div class="cell"><div class="k">' + T("stockPLRate") + '</div><div class="v ' + upDown(t.pl) + '">' +
-      (t.pl > 0.005 ? "+" : t.pl < -0.005 ? "−" : "") + Math.abs(t.rate).toFixed(2) + "%</div></div>";
-  }
-
-  function renderStocks() {
-    $("stockCount").textContent = state.stocks.length ? "共 " + state.stocks.length + " 笔" : "";
-    if (!state.stocks.length) {
-      $("stockList").innerHTML = '<div class="empty">' + T("stockEmpty") + "</div>";
-      return;
-    }
-    $("stockList").innerHTML = state.stocks.map(function (s) {
-      var mv = (s.shares || 0) * (s.price || 0);
-      var base = (s.shares || 0) * (s.cost || 0);
-      var pl = mv - base;
-      var rate = base ? pl / base * 100 : 0;
-      return '<div class="stock"><div class="sinfo">' +
-        '<div class="t">' + esc(s.name) + (s.code ? '<span class="code">' + esc(s.code) + "</span>" : "") + "</div>" +
-        '<div class="s">' + fmtShares(s.shares) + " × " + fmtMoney(s.cost) + " · 市值 " + fmtMoney(mv) + "</div></div>" +
-        '<div class="price" data-sedit="' + s.id + '" title="改现价">' + fmtMoney(s.price) + "</div>" +
-        '<div class="pl ' + upDown(pl) + '">' + fmtSigned(pl) + "<br>" +
-        (rate > 0 ? "+" : rate < 0 ? "−" : "") + Math.abs(rate).toFixed(2) + "%</div>" +
-        '<span class="del" data-sdel="' + s.id + '">✕</span></div>';
-    }).join("");
-  }
-
-  function renderCurve() {
-    var list = state.snaps.slice().sort(function (a, b) { return a.date < b.date ? -1 : 1; }).slice(-14);
-    if (!list.length) {
-      $("stockCurve").innerHTML = '<div class="empty">' + T("stockCurveEmpty") + "</div>";
-      return;
-    }
-    var max = Math.max.apply(null, list.map(function (s) { return s.mv; }).concat([1]));
-    $("stockCurve").innerHTML = list.map(function (s) {
-      var pct = Math.max(2, Math.round(s.mv / max * 100));
-      var up = s.mv >= s.cost;
-      return '<div class="bar-wrap"><div class="bar-label"><span>' + s.date.slice(5) +
-        '</span><span class="' + (up ? "up" : "down") + '">' + fmtMoney(s.mv) + "</span></div>" +
-        '<div class="bar-outer"><div class="bar-inner" style="width:' + pct + "%;background:linear-gradient(90deg," +
-        (up ? "var(--red),color-mix(in srgb, var(--red) 60%, #ffffff)" : "var(--green),color-mix(in srgb, var(--green) 60%, #ffffff)") +
-        ')"></div></div></div>';
-    }).join("");
-  }
-
-  function renderStockAll() {
-    renderStockSum();
-    renderStocks();
-    renderCurve();
-  }
-
-  $("stockList").addEventListener("click", function (e) {
-    var ds = e.target.dataset || {};
-    if (ds.sedit) { openEdit("stock", ds.sedit); return; }
-    if (ds.sdel) {
-      confirmBox(T("confirmDelStock"), function () {
-        state.stocks = state.stocks.filter(function (s) { return s.id !== ds.sdel; });
-        snapshotToday(); save(); renderStockAll(); renderHeaderStats();
-      });
-    }
-  });
 
   /* ---------- 通用编辑 ---------- */
   var editCtx = null; // { type, id }
@@ -2058,31 +1447,10 @@
         }), value: item.meal },
         { key: "text", label: T("editText"), type: "text", value: item.text }
       ];
-    } else if (type === "pet") {
-      state.pets.forEach(function (x) { if (x.id === id) item = x; });
-      if (!item) return;
-      fields = [
-        { key: "name", label: T("editName"), type: "text", value: item.name },
-        { key: "ptype", label: T("editType"), type: "select", options: PET_TYPES.map(function (p) {
-          return { v: p.id, t: p.icon + " " + p.name };
-        }), value: item.type },
-        { key: "birth", label: T("editBirth"), type: "date", value: item.birth || "" },
-        { key: "note", label: T("lblNote"), type: "text", value: item.note || "" }
-      ];
-    } else if (type === "stock") {
-      state.stocks.forEach(function (x) { if (x.id === id) item = x; });
-      if (!item) return;
-      fields = [
-        { key: "name", label: T("editName"), type: "text", value: item.name },
-        { key: "code", label: T("editCode"), type: "text", value: item.code || "" },
-        { key: "shares", label: T("editShares"), type: "number", value: item.shares },
-        { key: "cost", label: T("editCost"), type: "number", value: item.cost },
-        { key: "price", label: T("editPrice"), type: "number", value: item.price }
-      ];
     }
     if (!item) return;
     var dlgTitle = $("editDlg").querySelector("h3");
-    if (dlgTitle) dlgTitle.textContent = type === "pet" ? T("editPet") : type === "stock" ? T("editStock") : T("editEntry");
+    if (dlgTitle) dlgTitle.textContent = T("editEntry");
     editCtx = { type: type, id: id };
     $("editFields").innerHTML = fields.map(function (x) {
       return '<label style="display:block;font-size:12px;color:var(--muted);margin:8px 0 4px">' + x.label + "</label>" + fieldHtml(x);
@@ -2129,28 +1497,6 @@
         var t = fv("text"); if (t) d.text = t;
       });
       save(); renderDiet();
-    } else if (type === "pet") {
-      state.pets.forEach(function (p) {
-        if (p.id !== id) return;
-        var nm = fv("name"); if (nm) p.name = nm;
-        p.type = fv("ptype") || p.type;
-        p.birth = fv("birth");
-        p.note = fv("note");
-      });
-      save(); renderPetAll();
-    } else if (type === "stock") {
-      var sh = parseFloat(fv("shares")), ct = parseFloat(fv("cost")), pr = parseFloat(fv("price"));
-      if (!sh || sh <= 0) { alert(T("sharesBad")); return; }
-      if (isNaN(ct) || ct < 0 || isNaN(pr) || pr < 0) { alert(T("priceNeed")); return; }
-      state.stocks.forEach(function (s) {
-        if (s.id !== id) return;
-        var nm = fv("name"); if (nm) s.name = nm;
-        s.code = fv("code");
-        s.shares = Math.round(sh * 100) / 100;
-        s.cost = Math.round(ct * 1000) / 1000;
-        s.price = Math.round(pr * 1000) / 1000;
-      });
-      snapshotToday(); save(); renderStockAll(); renderHeaderStats();
     }
     $("editDlg").close(); editCtx = null;
   });
@@ -2340,24 +1686,6 @@
       });
     }
 
-    /* 照料 */
-    var dayCare = state.petLogs.filter(function (x) { return x.date === d; });
-    h += '<h3 class="sum-h">' + T("sumPet") + "</h3>";
-    if (!dayCare.length) {
-      h += '<div class="sum-none">' + T("sumNone") + "</div>";
-    } else {
-      state.pets.forEach(function (p) {
-        var items = dayCare.filter(function (x) { return x.petId === p.id; });
-        if (!items.length) return;
-        var tally = {};
-        items.forEach(function (x) { tally[x.act] = (tally[x.act] || 0) + 1; });
-        var txt = CARE_ACTS.filter(function (a) { return tally[a]; }).map(function (a) {
-          return CARE_ICON[a] + T("care_" + a) + (tally[a] > 1 ? "×" + tally[a] : "");
-        }).join(" ");
-        h += '<div class="summary-line"><span style="opacity:.8">' + esc(p.name) + "</span><span>" + txt + "</span></div>";
-      });
-    }
-
     /* 记录 */
     var dayProg = state.progress.filter(function (x) { return x.date === d; });
     h += '<h3 class="sum-h">' + T("sumRecords") + "</h3>";
@@ -2409,12 +1737,7 @@
             progress: data.progress || [],
             expenses: data.expenses || [],
             ideas: data.ideas || [],
-            diet: data.diet || [],
-            pets: data.pets || [],
-            petLogs: data.petLogs || [],
-            weights: data.weights || [],
-            stocks: data.stocks || [],
-            snaps: data.snaps || []
+            diet: data.diet || []
           };
           save(); renderAll();
         });
@@ -2426,8 +1749,7 @@
   $("clearBtn").addEventListener("click", function () {
     confirmBox(T("confirmClear"), function () {
       state = {
-        tasks: [], progress: [], expenses: [], ideas: [], diet: [],
-        pets: [], petLogs: [], weights: [], stocks: [], snaps: []
+        tasks: [], progress: [], expenses: [], ideas: [], diet: []
       };
       save(); renderAll();
     });
@@ -2447,14 +1769,6 @@
     });
     $("statSpend").textContent = fmtMoney(dayExp);
     $("statMonth").textContent = fmtMoney(monthExp);
-    var el = $("statPL");
-    if (!state.stocks.length) {
-      el.textContent = "—"; el.className = "value";
-    } else {
-      var t = stockTotals();
-      el.textContent = (t.pl > 0.005 ? "+" : t.pl < -0.005 ? "−" : "") + fmtShort(Math.abs(t.pl));
-      el.className = "value " + upDown(t.pl);
-    }
   }
 
   function renderAll() {
@@ -2467,8 +1781,6 @@
     renderExpenseDay();
     renderDietMealChips();
     renderDiet();
-    renderPetAll();
-    renderStockAll();
     if (ui.tab === "stats") renderStats();
   }
 
@@ -2483,11 +1795,10 @@
     if (nd === lastDay) return;
     lastDay = nd;
     today = nd;
-    ui.todoDate = nd; ui.progressDate = nd; ui.expenseDate = nd; ui.dietDate = nd; ui.careDate = nd;
+    ui.todoDate = nd; ui.progressDate = nd; ui.expenseDate = nd; ui.dietDate = nd;
     $("progressDate").value = nd;
     $("expenseDate").value = nd;
     $("dietDate").value = nd;
-    $("careDate").value = nd;
     sumDate = addDays(-1);
     $("sumDate").value = sumDate;
     renderAll();
