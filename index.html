@@ -1,0 +1,2499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>冒险手帐 · 个人计划助手</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    --radius: 14px;
+    /* 默认 = 塞尔达 · 白昼 */
+    --bg1: #eef2ee;
+    --bg2: #f6f9f6;
+    --tint: rgba(118,168,155,.06);
+    --tint2: rgba(190,168,128,.04);
+    --card: rgba(255,255,255,.88);
+    --card-border: rgba(94,122,110,.22);
+    --text: #2f3d38;
+    --muted: #7d8c86;
+    --accent: #3e8574;
+    --accent-deep: #2f6a5c;
+    --gold: #a8834f;
+    --red: #c05640;
+    --green: #3e8a5c;
+    --orange: #b07b3a;
+    --sep: rgba(94,122,110,.25);
+    --input-bg: #fbfdfc;
+    --chip-bg: rgba(255,255,255,.8);
+    --bar-track: #e6ebe7;
+    --nav-bg: rgba(255,255,255,.75);
+    --shadow-card: 0 0 16px rgba(118,168,155,.05) inset, 0 3px 12px rgba(31,54,47,.08);
+    --btn-grad: linear-gradient(160deg, #5f9c8b, #4a8372);
+    --btn-color: #ffffff;
+    --gold-grad: linear-gradient(160deg, #cfae6f, #b3924f);
+    --gold-color: #ffffff;
+    --dlg-bg: linear-gradient(170deg, #ffffff, #f3f7f4);
+    --dlg-backdrop: rgba(40,58,50,.4);
+    --dlg-shadow: 0 8px 30px rgba(31,54,47,.18);
+    --heading-font: inherit;
+    --head-rule: 1px solid var(--card-border);
+
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: var(--text);
+    min-height: 100vh; padding-bottom: 90px;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, var(--tint), transparent),
+      radial-gradient(ellipse 60% 40% at 90% 100%, var(--tint2), transparent),
+      linear-gradient(180deg, var(--bg2), var(--bg1) 60%);
+    background-attachment: fixed;
+    transition: background .4s;
+  }
+
+  /* ═══════ 塞尔达 ═══════ */
+  body.theme-zelda-night {
+    --bg1: #0b1619;
+    --bg2: #0e1e26;
+    --tint: rgba(118,168,155,.06);
+    --tint2: rgba(190,168,128,.04);
+    --card: rgba(17,38,46,.82);
+    --card-border: rgba(122,186,172,.20);
+    --text: #c9d5d1;
+    --muted: #7e928c;
+    --accent: #7cc0b1;
+    --accent-deep: #47796d;
+    --gold: #c2a878;
+    --red: #d08270;
+    --green: #8fb89e;
+    --orange: #c9a06a;
+    --sep: rgba(118,168,155,.15);
+    --input-bg: rgba(8,22,28,.7);
+    --chip-bg: rgba(8,22,28,.6);
+    --bar-track: rgba(8,22,28,.8);
+    --nav-bg: rgba(16,42,52,.5);
+    --shadow-card: 0 0 16px rgba(118,168,155,.06) inset, 0 3px 12px rgba(0,0,0,.35);
+    --btn-grad: linear-gradient(160deg, #557f74, #42695f);
+    --btn-color: #0b1714;
+    --gold-grad: linear-gradient(160deg, #b8a47c, #97845c);
+    --gold-color: #231e12;
+    --dlg-bg: linear-gradient(170deg, #12303c, #0c1f27);
+    --dlg-backdrop: rgba(4,10,12,.7);
+    --dlg-shadow: 0 0 26px rgba(118,168,155,.10);
+  }
+
+  /* ═══════ 韦斯·安德森 ═══════ */
+  /* 白昼：布达佩斯大饭店的粉红大厅 */
+  body.theme-wes-day {
+    --bg1: #f6dfda;
+    --bg2: #fdf2ec;
+    --tint: rgba(201,111,117,.09);
+    --tint2: rgba(112,160,130,.06);
+    --card: rgba(255,250,246,.95);
+    --card-border: rgba(199,110,117,.38);
+    --text: #4a3540;
+    --muted: #a08890;
+    --accent: #c76e75;
+    --accent-deep: #a8545c;
+    --gold: #b9863f;
+    --red: #c05a50;
+    --green: #6f9a78;
+    --orange: #c98a4a;
+    --sep: rgba(199,110,117,.3);
+    --input-bg: #fffdf9;
+    --chip-bg: rgba(255,250,246,.9);
+    --bar-track: #f6e3da;
+    --nav-bg: rgba(255,250,246,.85);
+    --shadow-card: 0 3px 0 rgba(199,110,117,.16), 0 4px 14px rgba(74,53,64,.08);
+    --btn-grad: linear-gradient(160deg, #d98a90, #c76e75);
+    --btn-color: #fff6f0;
+    --gold-grad: linear-gradient(160deg, #d4a853, #b9863f);
+    --gold-color: #fff8ec;
+    --dlg-bg: linear-gradient(170deg, #fff7f1, #f9e9e4);
+    --dlg-backdrop: rgba(74,53,64,.45);
+    --dlg-shadow: 0 10px 30px rgba(74,53,64,.22);
+    --heading-font: Georgia, "Times New Roman", "Songti SC", serif;
+    --head-rule: 3px double var(--accent);
+  }
+  /* 夜晚：酒店夜班，暗粉丝绒 */
+  body.theme-wes-night {
+    --bg1: #2b2126;
+    --bg2: #352a30;
+    --tint: rgba(214,146,153,.08);
+    --tint2: rgba(208,168,96,.06);
+    --card: rgba(62,46,54,.85);
+    --card-border: rgba(214,146,153,.28);
+    --text: #eed9dc;
+    --muted: #a68d95;
+    --accent: #d69299;
+    --accent-deep: #a86a72;
+    --gold: #d0a860;
+    --red: #d98378;
+    --green: #93b89b;
+    --orange: #d0a066;
+    --sep: rgba(214,146,153,.2);
+    --input-bg: rgba(36,27,32,.75);
+    --chip-bg: rgba(36,27,32,.6);
+    --bar-track: rgba(36,27,32,.8);
+    --nav-bg: rgba(62,46,54,.6);
+    --shadow-card: 0 0 16px rgba(214,146,153,.05) inset, 0 3px 12px rgba(0,0,0,.3);
+    --btn-grad: linear-gradient(160deg, #b87880, #995f68);
+    --btn-color: #ffeef0;
+    --gold-grad: linear-gradient(160deg, #b8924e, #96753a);
+    --gold-color: #2b2126;
+    --dlg-bg: linear-gradient(170deg, #3d2f36, #2e242a);
+    --dlg-backdrop: rgba(15,10,13,.7);
+    --dlg-shadow: 0 0 26px rgba(214,146,153,.12);
+    --heading-font: Georgia, "Times New Roman", "Songti SC", serif;
+    --head-rule: 3px double var(--accent);
+  }
+  body[class*="theme-wes"] .card,
+  body[class*="theme-wes"] .stat { border-width: 2px; }
+  body[class*="theme-wes"] .rune { font-family: Georgia, serif; }
+  body[class*="theme-wes"] .up-item,
+  body[class*="theme-wes"] .idea::before { color: var(--accent); }
+  body[class*="theme-wes"] .up-item { border-left: 1px solid var(--accent); }
+
+  /* ═══════ 广告狂人 ═══════ */
+  /* 白昼：麦迪逊大道的午后，纸与烟 */
+  body.theme-madmen-day {
+    --bg1: #e9e3d3;
+    --bg2: #f4f0e4;
+    --tint: rgba(179,90,47,.07);
+    --tint2: rgba(72,84,60,.05);
+    --card: rgba(255,252,244,.95);
+    --card-border: rgba(90,80,64,.35);
+    --text: #33302a;
+    --muted: #8d8677;
+    --accent: #b35a2f;
+    --accent-deep: #8f4523;
+    --gold: #8a7440;
+    --red: #a8402e;
+    --green: #5f7a4a;
+    --orange: #b3722c;
+    --sep: rgba(90,80,64,.3);
+    --input-bg: #fffef9;
+    --chip-bg: rgba(255,252,244,.9);
+    --bar-track: #e3dcc9;
+    --nav-bg: rgba(255,252,244,.85);
+    --shadow-card: 0 2px 0 rgba(90,80,64,.22), 0 4px 12px rgba(51,48,42,.1);
+    --btn-grad: linear-gradient(160deg, #3a382f, #2b2a22);
+    --btn-color: #f2ead8;
+    --gold-grad: linear-gradient(160deg, #b35a2f, #8f4523);
+    --gold-color: #f7f0e0;
+    --dlg-bg: linear-gradient(170deg, #fffdf6, #f1ecdd);
+    --dlg-backdrop: rgba(30,28,22,.5);
+    --dlg-shadow: 0 10px 30px rgba(30,28,22,.25);
+    --heading-font: Georgia, "Times New Roman", "STSong", serif;
+    --head-rule: 3px double var(--gold);
+  }
+  /* 夜晚：办公室吧台，威士忌与暗木 */
+  body.theme-madmen-night {
+    --bg1: #1d1a15;
+    --bg2: #27231c;
+    --tint: rgba(207,122,68,.07);
+    --tint2: rgba(194,164,100,.05);
+    --card: rgba(50,44,36,.85);
+    --card-border: rgba(210,190,150,.22);
+    --text: #e8e0cd;
+    --muted: #9a9080;
+    --accent: #cf7a44;
+    --accent-deep: #9c5326;
+    --gold: #c2a464;
+    --red: #c96a55;
+    --green: #8aa56f;
+    --orange: #c89550;
+    --sep: rgba(210,190,150,.16);
+    --input-bg: rgba(25,22,17,.75);
+    --chip-bg: rgba(25,22,17,.6);
+    --bar-track: rgba(25,22,17,.8);
+    --nav-bg: rgba(50,44,36,.6);
+    --shadow-card: 0 0 16px rgba(207,122,68,.05) inset, 0 3px 12px rgba(0,0,0,.35);
+    --btn-grad: linear-gradient(160deg, #cf7a44, #a05830);
+    --btn-color: #f7ecd9;
+    --gold-grad: linear-gradient(160deg, #c2a464, #9c8146);
+    --gold-color: #221e17;
+    --dlg-bg: linear-gradient(170deg, #332d24, #262119);
+    --dlg-backdrop: rgba(8,6,4,.7);
+    --dlg-shadow: 0 0 26px rgba(207,122,68,.12);
+    --heading-font: Georgia, "Times New Roman", "STSong", serif;
+    --head-rule: 3px double var(--gold);
+  }
+  body[class*="theme-madmen"] .rune { font-family: Georgia, serif; letter-spacing: 6px; }
+  body[class*="theme-madmen"] header h1 { letter-spacing: 4px; }
+
+  /* ═══════ 迷失东京 ═══════ */
+  /* 白昼：蓝调时刻的浅蓝，东京塔方向微亮 */
+  body.theme-lost-day {
+    --bg1: #dde5f0;
+    --bg2: #eef2f8;
+    --tint: rgba(122,142,196,.10);
+    --tint2: rgba(207,143,164,.07);
+    --card: rgba(255,255,255,.9);
+    --card-border: rgba(90,110,150,.26);
+    --text: #2c3550;
+    --muted: #7c88a0;
+    --accent: #4f7ab8;
+    --accent-deep: #3a5f96;
+    --gold: #b98a9e;
+    --red: #b56268;
+    --green: #5f9a8a;
+    --orange: #b08a5a;
+    --sep: rgba(90,110,150,.22);
+    --input-bg: #fbfcfe;
+    --chip-bg: rgba(255,255,255,.85);
+    --bar-track: #e2e8f2;
+    --nav-bg: rgba(255,255,255,.8);
+    --shadow-card: 0 0 16px rgba(122,142,196,.05) inset, 0 3px 12px rgba(44,53,80,.08);
+    --btn-grad: linear-gradient(160deg, #6a8cc4, #4f7ab8);
+    --btn-color: #f4f7ff;
+    --gold-grad: linear-gradient(160deg, #c998ab, #b98a9e);
+    --gold-color: #fff8fb;
+    --dlg-bg: linear-gradient(170deg, #ffffff, #f0f4fa);
+    --dlg-backdrop: rgba(30,40,70,.45);
+    --dlg-shadow: 0 8px 30px rgba(44,53,80,.2);
+  }
+  /* 夜晚：更深的蓝，一点霓虹粉 */
+  body.theme-lost-night {
+    --bg1: #0e1122;
+    --bg2: #161a30;
+    --tint: rgba(143,168,232,.09);
+    --tint2: rgba(217,138,158,.10);
+    --card: rgba(28,33,60,.85);
+    --card-border: rgba(143,168,232,.24);
+    --text: #d6dced;
+    --muted: #8a93b0;
+    --accent: #8fa8e8;
+    --accent-deep: #5f7ab8;
+    --gold: #d9a4b8;
+    --red: #d97a80;
+    --green: #8fc9a0;
+    --orange: #c9a06a;
+    --sep: rgba(143,168,232,.18);
+    --input-bg: rgba(14,17,34,.75);
+    --chip-bg: rgba(14,17,34,.6);
+    --bar-track: rgba(14,17,34,.8);
+    --nav-bg: rgba(28,33,60,.6);
+    --shadow-card: 0 0 16px rgba(143,168,232,.05) inset, 0 3px 12px rgba(0,0,0,.4);
+    --btn-grad: linear-gradient(160deg, #6a84cc, #4f6ab0);
+    --btn-color: #eef2ff;
+    --gold-grad: linear-gradient(160deg, #c98fae, #a86e8c);
+    --gold-color: #1c1030;
+    --dlg-bg: linear-gradient(170deg, #1e2340, #141830);
+    --dlg-backdrop: rgba(4,6,14,.72);
+    --dlg-shadow: 0 0 26px rgba(143,168,232,.14);
+  }
+  body[class*="theme-lost"] header h1 { letter-spacing: 8px; }
+  body.theme-lost-night header h1 {
+    text-shadow: 0 0 16px color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+
+  /* ═══════ 王家卫 ═══════ */
+  /* 白昼：一九六二年的走廊，旧墙绿、钨丝灯黄、旗袍红 */
+  body.theme-wang-day {
+    --bg1: #e7e0cf;
+    --bg2: #f3eee1;
+    --tint: rgba(122,90,52,.07);
+    --tint2: rgba(94,114,99,.06);
+    --card: rgba(255,251,242,.93);
+    --card-border: rgba(110,96,72,.28);
+    --text: #35302a;
+    --muted: #8f8574;
+    --accent: #5d7360;
+    --accent-deep: #43544a;
+    --gold: #a2452f;
+    --red: #b03a28;
+    --green: #5b7a54;
+    --orange: #b07a3a;
+    --sep: rgba(110,96,72,.22);
+    --input-bg: #fdfaf1;
+    --chip-bg: rgba(255,251,242,.9);
+    --bar-track: #e2dac8;
+    --nav-bg: rgba(255,251,242,.86);
+    --shadow-card: 0 1px 0 rgba(110,96,72,.12), 0 4px 14px rgba(53,48,42,.09);
+    --btn-grad: linear-gradient(160deg, #6d8470, #51665a);
+    --btn-color: #fbf7ec;
+    --gold-grad: linear-gradient(160deg, #b4533b, #8e3a26);
+    --gold-color: #fdf3e6;
+    --dlg-bg: linear-gradient(170deg, #fffdf5, #f1ead9);
+    --dlg-backdrop: rgba(35,30,24,.5);
+    --dlg-shadow: 0 10px 30px rgba(35,30,24,.28);
+    --heading-font: "Songti SC", "STSong", Georgia, "Times New Roman", serif;
+    --head-rule: 1px solid var(--card-border);
+  }
+  /* 夜晚：重庆森林的霓虹，暗棕底、青绿与橙红 */
+  body.theme-wang-night {
+    --bg1: #14120f;
+    --bg2: #1e1a15;
+    --tint: rgba(190,74,48,.08);
+    --tint2: rgba(96,150,124,.07);
+    --card: rgba(38,32,26,.85);
+    --card-border: rgba(210,180,140,.20);
+    --text: #e8ddc8;
+    --muted: #9d907a;
+    --accent: #7ea79b;
+    --accent-deep: #5f8271;
+    --gold: #c9603f;
+    --red: #d4705a;
+    --green: #9dbf8a;
+    --orange: #c9955a;
+    --sep: rgba(210,180,140,.15);
+    --input-bg: rgba(18,16,13,.72);
+    --chip-bg: rgba(18,16,13,.6);
+    --bar-track: rgba(18,16,13,.8);
+    --nav-bg: rgba(38,32,26,.6);
+    --shadow-card: 0 0 18px rgba(201,96,63,.05) inset, 0 3px 12px rgba(0,0,0,.4);
+    --btn-grad: linear-gradient(160deg, #8a5a42, #6a4230);
+    --btn-color: #f7e9d6;
+    --gold-grad: linear-gradient(160deg, #c9603f, #9a452b);
+    --gold-color: #1c1611;
+    --dlg-bg: linear-gradient(170deg, #2b241c, #1c1813);
+    --dlg-backdrop: rgba(6,5,4,.72);
+    --dlg-shadow: 0 0 28px rgba(201,96,63,.14);
+    --heading-font: "Songti SC", "STSong", Georgia, "Times New Roman", serif;
+    --head-rule: 1px solid var(--card-border);
+  }
+  body[class*="theme-wang"] header h1 { letter-spacing: 12px; font-weight: 400; }
+  body[class*="theme-wang"] .rune { font-family: Georgia, serif; letter-spacing: 5px; }
+  body[class*="theme-wang"] .card { border-radius: 5px; }
+  body[class*="theme-wang"] .entry .text { line-height: 1.85; letter-spacing: .4px; }
+  body[class*="theme-wang"] .up-item { border-left: 1px solid color-mix(in srgb, var(--gold) 45%, transparent); }
+
+  body.theme-zelda-night input[type="date"],
+  body[class*="theme-wes-night"] input[type="date"],
+  body[class*="theme-madmen-night"] input[type="date"],
+  body[class*="theme-lost-night"] input[type="date"],
+  body[class*="theme-wang-night"] input[type="date"] { color-scheme: dark; }
+  input[type="date"] { color-scheme: light; }
+
+  header {
+    text-align: center;
+    padding: 26px 18px 20px;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 8%, transparent), transparent);
+    border-bottom: var(--head-rule);
+  }
+  header h1 {
+    font-family: var(--heading-font);
+    font-size: 21px; font-weight: 700; letter-spacing: 6px;
+    color: var(--gold);
+    text-shadow: 0 0 14px color-mix(in srgb, var(--gold) 30%, transparent);
+  }
+  header .date { opacity: .75; font-size: 13px; margin-top: 8px; letter-spacing: 2px; color: var(--accent); }
+  header .rune { font-size: 11px; margin-top: 6px; color: var(--gold); opacity: .8; letter-spacing: 4px; }
+
+  .stats-row {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px;
+    margin: 16px 14px;
+  }
+  .stat {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: var(--radius); padding: 12px 8px;
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+  .stat .label { font-size: 10px; color: var(--muted); letter-spacing: 1px; white-space: nowrap; }
+  .stat .value { font-size: clamp(12px, 3.2vw, 20px); font-weight: 700; margin-top: 5px; color: var(--accent); letter-spacing: 0; white-space: nowrap; }
+  .stat .value.red { color: var(--red); }
+  .stat .value.up { color: var(--red); }
+  .stat .value.down { color: var(--green); }
+  .summary-line .del { color: var(--muted); cursor: pointer; font-size: 13px; padding: 0 2px; }
+  .summary-line .del:hover { color: var(--red); }
+
+  nav.tabs { display: flex; gap: 6px; padding: 0 14px 12px; overflow-x: auto; scrollbar-width: none; }
+  nav.tabs::-webkit-scrollbar { display: none; }
+  nav.tabs button {
+    flex: 1 0 auto; min-width: 72px; border: 1px solid var(--card-border); background: var(--nav-bg); color: var(--muted);
+    padding: 10px 8px; border-radius: 10px; font-size: 13px; cursor: pointer; white-space: nowrap;
+    transition: all .15s;
+  }
+  nav.tabs button.active {
+    background: linear-gradient(160deg,
+      color-mix(in srgb, var(--accent) 22%, transparent),
+      color-mix(in srgb, var(--accent) 8%, transparent));
+    color: var(--accent); border-color: var(--accent);
+    box-shadow: 0 0 9px color-mix(in srgb, var(--accent) 18%, transparent);
+  }
+
+  main { padding: 0 14px; }
+  .card {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 16px; margin-bottom: 14px;
+    box-shadow: var(--shadow-card);
+  }
+  .card h2 {
+    font-family: var(--heading-font);
+    font-size: 15px; margin-bottom: 12px; color: var(--gold);
+    display: flex; align-items: center; justify-content: space-between; letter-spacing: 2px;
+  }
+  .card h2 .hint { font-size: 12px; color: var(--muted); font-weight: 400; letter-spacing: 0; }
+
+  input[type="text"], input[type="number"], input[type="date"], select, textarea {
+    width: 100%; border: 1px solid var(--card-border); border-radius: 10px;
+    padding: 10px 12px; font-size: 14px; outline: none;
+    background: var(--input-bg); color: var(--text);
+    font-family: inherit;
+  }
+  input::placeholder, textarea::placeholder { color: var(--muted); }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--accent); box-shadow: 0 0 7px color-mix(in srgb, var(--accent) 18%, transparent);
+  }
+  select option { background: var(--input-bg); color: var(--text); }
+  textarea { resize: vertical; min-height: 70px; }
+
+  .row { display: flex; gap: 8px; }
+  .row > * { flex: 1; }
+
+  .btn {
+    border: none; border-radius: 10px; padding: 10px 16px;
+    font-size: 14px; cursor: pointer; letter-spacing: 1px;
+    background: var(--btn-grad);
+    color: var(--btn-color); font-weight: 700;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--accent-deep) 30%, transparent);
+    white-space: nowrap;
+  }
+  .btn.gold {
+    background: var(--gold-grad);
+    color: var(--gold-color); box-shadow: 0 2px 8px color-mix(in srgb, var(--gold) 30%, transparent);
+  }
+  .btn.ghost {
+    background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent);
+    box-shadow: none; border: 1px solid var(--card-border);
+  }
+  .btn.danger {
+    background: color-mix(in srgb, var(--red) 15%, transparent); color: var(--red);
+    box-shadow: none; border: 1px solid color-mix(in srgb, var(--red) 40%, transparent);
+  }
+
+  /* 任务项 */
+  .task {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 4px; border-bottom: 1px dashed var(--sep);
+  }
+  .task:last-child { border-bottom: none; }
+  .task input[type="checkbox"] { width: 19px; height: 19px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }
+  .task .name { flex: 1; font-size: 14px; word-break: break-all; cursor: pointer; }
+  .task .name:hover { color: var(--accent); }
+  .task.done .name { color: var(--muted); text-decoration: line-through; }
+  .task .badge {
+    font-size: 10px; color: var(--gold); border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+    border-radius: 6px; padding: 1px 5px; flex-shrink: 0;
+  }
+  .task .del, .entry .del, .expense .del { color: var(--muted); cursor: pointer; font-size: 15px; padding: 2px 6px; flex-shrink: 0; }
+  .task .del:hover, .entry .del:hover, .expense .del:hover { color: var(--red); }
+  .empty { text-align: center; color: var(--muted); font-size: 13px; padding: 18px 0; letter-spacing: 1px; }
+
+  /* 快捷日期 */
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .chips button {
+    border: 1px solid var(--card-border); background: var(--chip-bg); color: var(--muted);
+    border-radius: 20px; padding: 5px 13px; font-size: 12px; cursor: pointer;
+  }
+  .chips button.on {
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    border-color: var(--accent); color: var(--accent);
+  }
+
+  /* 记账 */
+  .expense { display: flex; align-items: center; gap: 10px; padding: 11px 4px; border-bottom: 1px dashed var(--sep); }
+  .expense:last-child { border-bottom: none; }
+  .expense .cat {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0;
+  }
+  .expense .info { flex: 1; min-width: 0; }
+  .expense .info .t { font-size: 14px; }
+  .expense .info .s { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .expense .amount { font-weight: 700; }
+
+  .summary-line { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); padding: 5px 0; }
+  .sum-h { font-size: 12px; letter-spacing: .5px; color: var(--gold); margin: 16px 0 4px; }
+  .sum-h:first-child { margin-top: 0; }
+  .sum-none { font-size: 12px; color: var(--muted); opacity: .75; margin: 4px 0 2px; }
+  .sum-text { font-size: 13px; line-height: 1.55; margin: 5px 0; color: var(--text); }
+  .summary-line b { color: var(--text); }
+  .bar-wrap { margin: 8px 0 2px; }
+  .bar-outer { height: 8px; background: var(--bar-track); border-radius: 6px; overflow: hidden; border: 1px solid color-mix(in srgb, var(--accent) 12%, transparent); }
+  .bar-inner { height: 100%; background: linear-gradient(90deg, var(--accent-deep), var(--accent)); border-radius: 6px; box-shadow: 0 0 5px color-mix(in srgb, var(--accent) 25%, transparent); }
+  .bar-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  /* 进展 & 灵感 */
+  .entry { padding: 12px 4px; border-bottom: 1px dashed var(--sep); }
+  .entry:last-child { border-bottom: none; }
+  .entry .time { font-size: 12px; color: var(--muted); margin-bottom: 5px; }
+  .entry .text { font-size: 14px; white-space: pre-wrap; word-break: break-all; }
+  .idea::before { content: "✦"; color: var(--gold); font-size: 12px; }
+  .idea .text { padding-left: 18px; }
+  .link-chip {
+    display: inline-block; font-size: 11px; color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: 6px;
+    padding: 1px 7px; margin-left: 8px; background: color-mix(in srgb, var(--accent) 8%, transparent);
+  }
+
+  .date-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .date-bar input { flex: 1; }
+  .quick-cats { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .quick-cats button {
+    border: 1px solid var(--card-border); background: var(--chip-bg); border-radius: 20px;
+    padding: 5px 12px; font-size: 13px; cursor: pointer; color: var(--text);
+  }
+  .quick-cats button.on {
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    border-color: var(--accent); color: var(--accent);
+  }
+  .foot-note { text-align: center; color: var(--muted); font-size: 12px; padding: 10px; letter-spacing: 2px; }
+
+  /* 未来计划分组 */
+  .up-group { margin-bottom: 10px; }
+  .up-group:last-child { margin-bottom: 0; }
+  .up-date { font-size: 12px; color: var(--gold); margin: 6px 0 2px; letter-spacing: 1px; }
+  .up-item { font-size: 13px; padding: 5px 0 5px 14px; color: var(--text); border-left: 1px solid color-mix(in srgb, var(--gold) 35%, transparent); margin-left: 4px; }
+
+  /* 宠物 */
+  .pet { display: flex; align-items: center; gap: 10px; padding: 11px 4px; border-bottom: 1px dashed var(--sep); }
+  .pet:last-child { border-bottom: none; }
+  .pet .avatar {
+    width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    display: flex; align-items: center; justify-content: center; font-size: 19px;
+  }
+  .pet .info { flex: 1; min-width: 0; }
+  .pet .info .t { font-size: 14px; }
+  .pet .info .s { font-size: 11px; color: var(--muted); margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pet .ico { color: var(--muted); cursor: pointer; font-size: 14px; padding: 2px 5px; flex-shrink: 0; }
+  .pet .ico:hover { color: var(--accent); }
+  .pet .ico.x:hover { color: var(--red); }
+  .care-block { padding: 11px 2px; border-bottom: 1px dashed var(--sep); }
+  .care-block:last-child { border-bottom: none; }
+  .care-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+  .care-head .who { font-size: 13.5px; }
+  .care-head .today { font-size: 11px; color: var(--muted); letter-spacing: .5px; }
+  .care-acts { display: flex; gap: 6px; flex-wrap: wrap; }
+  .care-acts button {
+    border: 1px solid var(--card-border); background: var(--chip-bg); color: var(--text);
+    border-radius: 20px; padding: 5px 11px; font-size: 12px; cursor: pointer; transition: all .12s;
+  }
+  .care-acts button:hover { background: color-mix(in srgb, var(--accent) 14%, transparent); border-color: var(--accent); color: var(--accent); }
+
+  /* 股票 */
+  .stock { display: flex; align-items: center; gap: 8px; padding: 11px 4px; border-bottom: 1px dashed var(--sep); }
+  .stock:last-child { border-bottom: none; }
+  .stock .sinfo { flex: 1; min-width: 0; }
+  .stock .sinfo .t { font-size: 14px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .stock .code { font-size: 10px; color: var(--muted); border: 1px solid var(--sep); border-radius: 5px; padding: 0 4px; letter-spacing: 0; }
+  .stock .sinfo .s { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .stock .price { font-size: 14px; font-weight: 600; cursor: pointer; text-align: right; min-width: 56px; }
+  .stock .price:hover { color: var(--accent); }
+  .stock .pl { font-size: 12px; text-align: right; min-width: 82px; line-height: 1.4; }
+  .up { color: var(--red); }
+  .down { color: var(--green); }
+  .flat { color: var(--muted); }
+  .stock-sum { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .stock-sum .cell { padding: 10px 12px; border-radius: 10px; background: color-mix(in srgb, var(--accent) 7%, transparent); }
+  .stock-sum .cell .k { font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+  .stock-sum .cell .v { font-size: 17px; font-weight: 700; margin-top: 4px; letter-spacing: 0; }
+
+  dialog {
+    border: 1px solid var(--card-border); border-radius: var(--radius); padding: 20px;
+    width: min(92vw, 440px); max-height: 86vh; overflow-y: auto;
+    background: var(--dlg-bg);
+    color: var(--text);
+    box-shadow: var(--dlg-shadow);
+  }
+  dialog::backdrop { background: var(--dlg-backdrop); }
+  dialog h3 {
+    font-family: var(--heading-font);
+    font-size: 16px; margin-bottom: 14px; color: var(--gold); letter-spacing: 2px;
+  }
+  dialog label { display: block; font-size: 12px; color: var(--muted); margin: 12px 0 5px; letter-spacing: 1px; }
+  dialog textarea { min-height: 58px; }
+</style>
+</head>
+<body>
+
+<script>
+/* 首帧前先上主题，避免闪色 */
+(function () {
+  try {
+    var pref = localStorage.getItem("personal-planner-theme") || "wang";
+    var mode = localStorage.getItem("personal-planner-mode") || "auto";
+    var h = new Date().getHours();
+    var night = mode === "night" || (mode === "auto" && (h >= 18 || h < 6));
+    document.body.className = "theme-" + pref + "-" + (night ? "night" : "day");
+  } catch (e) { document.body.className = "theme-wang-day"; }
+})();
+</script>
+
+<header>
+  <h1 data-i18n="title">冒险手帐</h1>
+  <div class="rune" data-i18n="rune">◆ ─── 縁 ／ 錄 ─── ◆</div>
+  <div class="date" id="todayText"></div>
+</header>
+
+<div class="stats-row">
+  <div class="stat"><div class="label" data-i18n="stat1">今日试炼</div><div class="value" id="statTasks">-</div></div>
+  <div class="stat"><div class="label" data-i18n="stat2">今日支出</div><div class="value red" id="statSpend">-</div></div>
+  <div class="stat"><div class="label" data-i18n="stat3">本月支出</div><div class="value red" id="statMonth">-</div></div>
+  <div class="stat"><div class="label" data-i18n="stat4">持仓盈亏</div><div class="value" id="statPL">-</div></div>
+</div>
+
+<nav class="tabs">
+  <button data-tab="todo" class="active" data-i18n="tabTodo">⚔️ 试炼</button>
+  <button data-tab="progress" data-i18n="tabProgress">📜 记录</button>
+  <button data-tab="inspire" data-i18n="tabInspire">✦ 灵感</button>
+  <button data-tab="money" data-i18n="tabMoney">💰 卢比</button>
+  <button data-tab="diet" data-i18n="tabDiet">🍲 料理</button>
+  <button data-tab="pet" data-i18n="tabPet">🐈 猫</button>
+  <button data-tab="stock" data-i18n="tabStock">📈 涨跌</button>
+  <button data-tab="stats" data-i18n="tabStats">📊 图鉴</button>
+  <button data-tab="settings" data-i18n="tabSettings">⚙️ 存档</button>
+</nav>
+
+<main>
+  <!-- 待办 -->
+  <section id="tab-todo">
+    <div class="card">
+      <div class="date-bar">
+        <input type="date" id="todoDate">
+      </div>
+      <div class="chips" id="todoChips"></div>
+      <div class="row" style="margin-top:10px">
+        <input type="text" id="taskInput" data-i18n-ph="taskPh" placeholder="写下新的试炼目标…" maxlength="100">
+        <button class="btn" id="addTaskBtn" data-i18n="addTask">出发</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span data-i18n="listTitle">◆ 试炼清单</span> <span class="hint" id="taskCount"></span></h2>
+      <div id="taskList"></div>
+      <div class="empty" style="padding:6px 0 0;font-size:11px" data-i18n="clickHint">点击事项名称，可记录该事项的进展、难点与备注</div>
+    </div>
+    <div class="card">
+      <h2><span data-i18n="upcomingTitle">◆ 即将到来</span> <span class="hint" data-i18n="upcomingHint">未来 14 天的试炼</span></h2>
+      <div id="upcomingList"></div>
+    </div>
+  </section>
+
+  <!-- 记录（进展） -->
+  <section id="tab-progress" style="display:none">
+    <div class="card">
+      <div class="date-bar">
+        <input type="date" id="progressDate">
+      </div>
+      <textarea id="progressInput" data-i18n-ph="logPh" placeholder="记录今天的冒险日志：进展、心得、遭遇的敌人…"></textarea>
+      <div class="row" style="margin-top:10px">
+        <button class="btn" id="addProgressBtn" data-i18n="addLog" style="flex:0 0 auto">刻录记录</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span data-i18n="logTitle">◆ 冒险日志</span> <span class="hint" data-i18n="logHint">按时间倒序</span></h2>
+      <div id="progressList"></div>
+    </div>
+  </section>
+
+  <!-- 灵感 -->
+  <section id="tab-inspire" style="display:none">
+    <div class="card">
+      <h2 data-i18n="ideaTitle">✦ 捕捉灵感</h2>
+      <textarea id="ideaInput" data-i18n-ph="ideaPh" placeholder="灵光一闪…可以留白，也可以关联某项试炼"></textarea>
+      <label style="font-size:12px;color:var(--muted);margin:10px 0 5px;display:block" data-i18n="ideaLinkLbl">关联试炼（可选）</label>
+      <select id="ideaLink">
+        <option value="" data-i18n="ideaLinkNone">— 不关联，独立灵感 —</option>
+      </select>
+      <button class="btn gold" id="addIdeaBtn" data-i18n="addIdea" style="margin-top:12px;width:100%">✦ 收入灵感袋</button>
+    </div>
+    <div class="card">
+      <h2><span data-i18n="ideaListTitle">✦ 灵感袋</span> <span class="hint" id="ideaCount"></span></h2>
+      <div id="ideaList"></div>
+    </div>
+  </section>
+
+  <!-- 记账 -->
+  <section id="tab-money" style="display:none">
+    <div class="card">
+      <h2 data-i18n="moneyTitle">◆ 记一笔卢比</h2>
+      <div class="date-bar">
+        <input type="date" id="expenseDate">
+      </div>
+      <div class="row">
+        <input type="number" id="expenseAmount" data-i18n-ph="moneyPhAmount" placeholder="金额 ¥" step="0.01" min="0">
+        <select id="expenseType">
+          <option value="expense" data-i18n="typeExpense">支出</option>
+          <option value="income" data-i18n="typeIncome">收入</option>
+        </select>
+      </div>
+      <input type="text" id="expenseNote" data-i18n-ph="moneyPhNote" placeholder="备注（买 / 卖了什么）" style="margin-top:8px" maxlength="60">
+      <div class="quick-cats" id="quickCats"></div>
+      <button class="btn" id="addExpenseBtn" data-i18n="saveExpense" style="margin-top:12px;width:100%">存入钱袋</button>
+    </div>
+    <div class="card">
+      <h2><span data-i18n="daySumTitle">◆ 当日汇总</span> <span class="hint" id="expenseDayText"></span></h2>
+      <div class="summary-line"><span data-i18n="lblExpense">支出</span><b style="color:var(--red)" id="dayExpense">¥0.00</b></div>
+      <div class="summary-line"><span data-i18n="lblIncome">收入</span><b style="color:var(--green)" id="dayIncome">¥0.00</b></div>
+    </div>
+    <div class="card">
+      <h2><span data-i18n="detailTitle2">◆ 钱袋明细</span> <span class="hint" id="expenseCount"></span></h2>
+      <div id="expenseList"></div>
+    </div>
+  </section>
+
+  <!-- 料理（饮食） -->
+  <section id="tab-diet" style="display:none">
+    <div class="card">
+      <h2 data-i18n="dietTitle">◆ 今天的料理</h2>
+      <div class="date-bar">
+        <input type="date" id="dietDate">
+      </div>
+      <div class="chips" id="dietMealChips" style="margin-top:0"></div>
+      <div class="row" style="margin-top:10px">
+        <input type="text" id="dietInput" data-i18n-ph="dietPh" placeholder="今天吃了什么？" maxlength="80">
+        <button class="btn" id="addDietBtn" data-i18n="addDiet">下锅</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span data-i18n="dietListTitle">◆ 料理账</span> <span class="hint" id="dietCount"></span></h2>
+      <div id="dietList"></div>
+    </div>
+  </section>
+
+  <!-- 宠物 -->
+  <section id="tab-pet" style="display:none">
+    <div class="card">
+      <h2 data-i18n="petAddTitle">◆ 新的伙伴</h2>
+      <div class="row">
+        <input type="text" id="petName" data-i18n-ph="petNamePh" placeholder="名字" maxlength="20">
+        <select id="petType" style="flex:0 0 34%"></select>
+      </div>
+      <input type="text" id="petNote" data-i18n-ph="petNotePh" placeholder="品种／备注" style="margin-top:8px" maxlength="60">
+      <button class="btn" id="addPetBtn" data-i18n="addPet" style="margin-top:12px;width:100%">带回家</button>
+    </div>
+    <div class="card">
+      <h2><span data-i18n="petListTitle">◆ 屋里的</span> <span class="hint" id="petCount"></span></h2>
+      <div id="petList"></div>
+    </div>
+    <div class="card">
+      <h2><span data-i18n="careTitle">◆ 今日照料</span> <span class="hint" data-i18n="careHint">点一下就记下了</span></h2>
+      <div class="date-bar"><input type="date" id="careDate"></div>
+      <div id="careList"></div>
+    </div>
+    <div class="card">
+      <h2><span data-i18n="petLogTitle">◆ 照料流水</span> <span class="hint" id="petLogCount"></span></h2>
+      <div id="petLogList"></div>
+    </div>
+    <div class="card">
+      <h2><span data-i18n="weightTitle">◆ 体重</span> <span class="hint" id="weightPetName"></span></h2>
+      <div class="row">
+        <select id="weightPet" style="flex:0 0 46%"></select>
+        <input type="number" id="weightKg" data-i18n-ph="weightPh" placeholder="kg" step="0.01" min="0">
+        <button class="btn ghost" id="addWeightBtn" data-i18n="addWeight" style="flex:0 0 auto">称一下</button>
+      </div>
+      <div id="weightList" style="margin-top:6px"></div>
+    </div>
+  </section>
+
+  <!-- 股票 -->
+  <section id="tab-stock" style="display:none">
+    <div class="card">
+      <h2 data-i18n="stockAddTitle">◆ 记一笔仓</h2>
+      <div class="row">
+        <input type="text" id="stockName" data-i18n-ph="stockNamePh" placeholder="名称" maxlength="20">
+        <input type="text" id="stockCode" data-i18n-ph="stockCodePh" placeholder="代码" maxlength="12" style="flex:0 0 38%">
+      </div>
+      <div class="row" style="margin-top:8px">
+        <input type="number" id="stockShares" data-i18n-ph="stockSharesPh" placeholder="股数" step="1" min="0">
+        <input type="number" id="stockCost" data-i18n-ph="stockCostPh" placeholder="成本价" step="0.001" min="0">
+        <input type="number" id="stockPrice" data-i18n-ph="stockPricePh" placeholder="现价" step="0.001" min="0">
+      </div>
+      <button class="btn" id="addStockBtn" data-i18n="addStock" style="margin-top:12px;width:100%">记上</button>
+    </div>
+    <div class="card">
+      <h2><span data-i18n="stockSumTitle">◆ 总账</span> <span class="hint" id="stockSumText"></span></h2>
+      <div class="stock-sum" id="stockSum"></div>
+    </div>
+    <div class="card">
+      <h2><span data-i18n="stockListTitle">◆ 持仓</span> <span class="hint" id="stockCount"></span></h2>
+      <div id="stockList"></div>
+    </div>
+    <div class="card">
+      <h2 data-i18n="stockCurveTitle">◆ 这些日子的市值</h2>
+      <div id="stockCurve"></div>
+    </div>
+  </section>
+
+  <!-- 统计 -->
+  <section id="tab-stats" style="display:none">
+    <div class="card">
+      <h2><span data-i18n="sumTitle">◆ 每日总结</span> <span class="hint" id="sumDateText"></span></h2>
+      <div class="chips" id="sumChips" style="margin-top:0"></div>
+      <div class="date-bar" style="margin-top:8px"><input type="date" id="sumDate"></div>
+      <div id="sumBody" style="margin-top:12px"></div>
+    </div>
+    <div class="card">
+      <h2><span data-i18n="stats1">◆ 本月支出分类</span> <span class="hint" id="statMonthText"></span></h2>
+      <div id="catBars"></div>
+    </div>
+    <div class="card">
+      <h2 data-i18n="stats2">◆ 最近 7 天支出趋势</h2>
+      <div id="trendBars"></div>
+    </div>
+    <div class="card">
+      <h2 data-i18n="stats3">◆ 试炼完成率（近 7 天）</h2>
+      <div id="taskRate"></div>
+    </div>
+  </section>
+
+  <!-- 设置 -->
+  <section id="tab-settings" style="display:none">
+    <div class="card">
+      <h2><span data-i18n="themeTitle">◆ 主题</span> <span class="hint" data-i18n="themeHint">「自动」在 18:00 与 6:00 之间为白天</span></h2>
+      <div class="chips" id="themeChips" style="margin-top:0"></div>
+      <div class="chips" id="modeChips" style="margin-top:6px"></div>
+    </div>
+    <div class="card">
+      <h2 data-i18n="saveTitle">◆ 存档管理</h2>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:12px" data-i18n="saveDesc">数据保存在本机浏览器中。换设备或换浏览器时，先在旧设备「导出存档」，再在新设备「导入存档」即可同步。</p>
+      <div class="row">
+        <button class="btn ghost" id="exportBtn" data-i18n="exportBtn">📤 导出存档</button>
+        <button class="btn ghost" id="importBtn" data-i18n="importBtn">📥 导入存档</button>
+      </div>
+      <input type="file" id="importFile" accept=".json" style="display:none">
+    </div>
+    <div class="card">
+      <h2 data-i18n="dangerTitle">◆ 危险区域</h2>
+      <button class="btn danger" id="clearBtn" data-i18n="clearBtn">清空全部存档</button>
+    </div>
+    <div class="foot-note" data-i18n="foot">HYRULE · ADVENTURE LOG ◆ 数据仅存于本机</div>
+  </section>
+</main>
+
+<!-- 任务详情弹窗 -->
+<dialog id="taskDlg">
+  <h3 data-i18n="detailTitle">◆ 试炼详情</h3>
+  <input type="text" id="dlgName" maxlength="80" style="margin-bottom:8px">
+  <div class="row" style="margin-bottom:4px">
+    <label style="flex:0 0 auto;font-size:12px;color:var(--muted);align-self:center;margin:0" data-i18n="editDate">日期</label>
+    <input type="date" id="dlgDate" style="flex:1">
+  </div>
+  <label data-i18n="lblProgress">进展情况</label>
+  <textarea id="dlgProgress" data-i18n-ph="dlgPhProgress" placeholder="推进到哪一步了？"></textarea>
+  <label data-i18n="lblDifficulty">难点</label>
+  <textarea id="dlgDifficulty" data-i18n-ph="dlgPhDifficulty" placeholder="卡在哪里？需要什么支援？"></textarea>
+  <label data-i18n="lblNote">备注</label>
+  <input type="text" id="dlgNote" data-i18n-ph="dlgPhNote" placeholder="其他想记下的东西" maxlength="120">
+  <div class="row" style="margin-top:16px">
+    <button class="btn ghost" id="dlgCancel" data-i18n="btnCancel">取消</button>
+    <button class="btn" id="dlgSave" data-i18n="btnSave">保存</button>
+  </div>
+</dialog>
+
+<dialog id="confirmDlg">
+  <h3>◆ …</h3>
+  <p id="confirmMsg" style="font-size:14px;color:var(--muted);margin-bottom:16px"></p>
+  <div class="row">
+    <button class="btn ghost" id="confirmNo" data-i18n="btnCancel">取消</button>
+    <button class="btn danger" id="confirmYes" data-i18n="confirmYes">确认</button>
+  </div>
+</dialog>
+
+<!-- 通用编辑弹窗 -->
+<dialog id="editDlg">
+  <h3 data-i18n="editEntry">◆ 修改记录</h3>
+  <div id="editFields"></div>
+  <div class="row" style="margin-top:16px">
+    <button class="btn ghost" id="editCancel" data-i18n="btnCancel">取消</button>
+    <button class="btn" id="editSave" data-i18n="btnSave">保存</button>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  "use strict";
+
+  var KEY = "personal-planner-v2";
+  var THEME_KEY = "personal-planner-theme";
+  var MODE_KEY = "personal-planner-mode";
+
+  /* ═══════ 主题语言系统 ═══════ */
+  var I18N = {
+    wang: {
+      title: "花样手帐", rune: "◆ ─── 一九六二 ／ 香港 ─── ◆",
+      stat1: "今日约定", stat2: "今日花销", stat3: "本月花销", stat4: "账户涨跌",
+      tabTodo: "🕰 约定", tabProgress: "🚬 独白", tabInspire: "🥫 罐头", tabMoney: "🪙 港币", tabDiet: "🍜 宵夜", tabPet: "🐈 猫", tabStock: "📈 涨跌", tabStats: "🎞 回望", tabSettings: "📻 唱片",
+      taskPh: "如果有多一个约定，你会不会来…", addTask: "记下",
+      listTitle: "◆ 这一日的约定", clickHint: "点一下名字，写下进展、为难处，和没说完的话",
+      upcomingTitle: "◆ 接下来的日子", upcomingHint: "未来十四天的约定",
+      listEmpty: "这一夜没有约定，只有雨声 🌧", upcomingEmpty: "接下来的日子还空着，像一条没走过的街 🌃",
+      detailTitle: "◆ 约定的细节", lblProgress: "走到哪了", lblDifficulty: "为难的地方", lblNote: "没说完的话",
+      dlgPhProgress: "今天走到哪一步…", dlgPhDifficulty: "卡在哪儿，是谁的问题…", dlgPhNote: "留一句话给自己",
+      btnSave: "记住", btnCancel: "算了", confirmYes: "就这样",
+      editEntry: "◆ 重写这一段", editName: "名字", editDate: "日期", editText: "内容", editMeal: "第几餐", editAmount: "数目", editCat: "类别", editType: "类型", editLink: "关联约定",
+      sumTitle: "◆ 那一夜", sumYd: "昨夜", sumTd: "今夜", sum2d: "前夜", sumPlans: "◆ 约定与了结", sumUn: "没有来", sumCarry: "带到明天", sumCarryAll: "全部带到明天", sumMoney: "◆ 花掉的钱", sumDiet: "◆ 吃了什么", sumPet: "◆ 屋里的它们", sumRecords: "◆ 独白", sumIdeas: "◆ 罐头", sumNone: "什么都没有",
+      logPh: "凌晨三点睡不着，就写点什么…", addLog: "说一句",
+      logTitle: "◆ 独白", logHint: "最近的写在上面", logEmpty: "还没有人说话 🚬",
+      ideaTitle: "🥫 一罐凤梨", ideaPh: "五月一日到期的凤梨罐头…",
+      ideaLinkLbl: "跟哪件约定有关（可以不选）", ideaLinkNone: "— 不关联，让它随风去 —", addIdea: "封进罐头",
+      ideaListTitle: "🥫 罐头架", ideaEmpty: "罐头架还是空的 🥫", ideaStandalone: "一个人的", ideaLinkPrefix: "🕰 ",
+      moneyTitle: "◆ 记一笔", moneyPhAmount: "多少 ¥", moneyPhNote: "花在哪儿了",
+      typeExpense: "花掉", typeIncome: "进来", saveExpense: "记上",
+      daySumTitle: "◆ 这一天的账", lblExpense: "花掉", lblIncome: "进来", detailTitle2: "◆ 账目", expenseEmpty: "今天没花钱 🪙",
+      stats1: "◆ 这个月花在哪儿", stats2: "◆ 最近七天的花销", stats3: "◆ 约定完成（近七天）",
+      statsNone: "没有约定", statsMonthEmpty: "这个月一分没动",
+      themeTitle: "◆ 色调", themeHint: "「自动」在 18:00 与 6:00 之间为白天", saveTitle: "◆ 唱片柜",
+      saveDesc: "东西都存在这台机器的唱片柜里。换一台，先「刻一张」，再「放进去」。",
+      exportBtn: "📤 刻一张", importBtn: "📥 放进去", dangerTitle: "◆ 别碰这里", clearBtn: "全部擦掉",
+      foot: "IN THE MOOD FOR LOVE · 1962 ◆ 数据只在这台机器", filePrefix: "花样手帐",
+      confirmDelTask: "这条约定要忘掉吗？（连同那些话）",
+      confirmDelLog: "这段独白不留下了？", confirmDelIdea: "这罐罐头要扔？", confirmDelExpense: "这笔账划掉？",
+      confirmImport: "放进去会盖掉现在所有的东西，确定？", importBad: "这张唱片不对，放不进去",
+      confirmClear: "所有东西都会消失，再也找不回来。确定？",
+      ideaNeed: "先说一句 🥫", amountBad: "数目不对",
+      tabDiet: "🍜 宵夜", dietTitle: "◆ 今晚吃了什么", dietPh: "云吞面，还是那碗一直没吃完的…", addDiet: "吃",
+      dietListTitle: "◆ 吃过的", dietEmpty: "还没吃东西 🍜", confirmDelDiet: "这顿不算了？",
+      /* —— 宠物 —— */
+      petAddTitle: "◆ 屋里多一只", petNamePh: "叫什么名字", petNotePh: "品种，或者一句话", addPet: "带回家",
+      petListTitle: "◆ 屋里的", petEmpty: "屋子还很静，没有脚步声 🐾",
+      careTitle: "◆ 今日照料", careEmpty: "先带一只回来吧 🐾", careHint: "点一下就记下了",
+      petLogTitle: "◆ 照料流水", petLogEmpty: "今天还没人理它",
+      confirmDelPet: "让它走？（连同照料与体重记录）", confirmDelPetLog: "这条不算了？",
+      weightTitle: "◆ 体重", weightPh: "kg", addWeight: "称一下", weightEmpty: "还没称过",
+      editPet: "◆ 改一改", editBirth: "生日",
+      care_feed: "喂饭", care_water: "换水", care_litter: "铲屎", care_walk: "遛弯", care_play: "陪玩", care_med: "用药", care_bath: "洗澡",
+      /* —— 股票 —— */
+      stockAddTitle: "◆ 记一笔仓", stockNamePh: "名字", stockCodePh: "代码", stockSharesPh: "股数", stockCostPh: "成本价", stockPricePh: "现价", addStock: "记上",
+      stockSumTitle: "◆ 总账", stockMV: "市值", stockCostLbl: "成本", stockPL: "浮动盈亏", stockPLRate: "幅度",
+      stockListTitle: "◆ 持仓", stockEmpty: "空仓，什么都没拿",
+      stockCurveTitle: "◆ 这些日子的市值", stockCurveEmpty: "再等一天，才有曲线",
+      confirmDelStock: "清掉这一笔？", priceNeed: "现价不对", sharesBad: "股数不对",
+      editStock: "◆ 改一改这一笔", editShares: "股数", editCost: "成本价", editPrice: "现价", editCode: "代码"
+    },
+    zelda: {
+      title: "冒险手帐", rune: "◆ ─── 縁 ／ 錄 ─── ◆",
+      stat1: "今日试炼", stat2: "今日支出", stat3: "本月支出",
+      tabTodo: "⚔️ 试炼", tabProgress: "📜 记录", tabInspire: "✦ 灵感", tabMoney: "💰 卢比", tabStats: "📊 图鉴", tabSettings: "⚙️ 存档",
+      taskPh: "写下新的试炼目标…", addTask: "出发",
+      listTitle: "◆ 试炼清单", clickHint: "点击事项名称，可记录该事项的进展、难点与备注",
+      upcomingTitle: "◆ 即将到来", upcomingHint: "未来 14 天的试炼",
+      listEmpty: "这一天风平浪静，去写下新的试炼吧 ⚔️", upcomingEmpty: "未来两周暂无计划中的试炼 🌙",
+      detailTitle: "◆ 试炼详情", lblProgress: "进展情况", lblDifficulty: "难点", lblNote: "备注",
+      dlgPhProgress: "推进到哪一步了？", dlgPhDifficulty: "卡在哪里？需要什么支援？", dlgPhNote: "其他想记下的东西",
+      btnSave: "保存", btnCancel: "取消", confirmYes: "确认",
+      editEntry: "◆ 修改记录", editName: "名称", editDate: "日期", editText: "内容", editMeal: "餐次", editAmount: "金额", editCat: "分类", editType: "类型", editLink: "关联试炼",
+      sumTitle: "◆ 冒险回顾", sumYd: "昨日", sumTd: "今日", sum2d: "前日", sumPlans: "◆ 试炼与完成", sumUn: "未完成", sumCarry: "顺延至明日", sumCarryAll: "全部顺延", sumMoney: "◆ 卢比出入", sumDiet: "◆ 料理", sumRecords: "◆ 刻录记录", sumIdeas: "◆ 灵感", sumNone: "无记录",
+      logPh: "记录今天的冒险日志：进展、心得、遭遇的敌人…", addLog: "刻录记录",
+      logTitle: "◆ 冒险日志", logHint: "按时间倒序", logEmpty: "日志石碑还空着 📜",
+      ideaTitle: "✦ 捕捉灵感", ideaPh: "灵光一闪…可以留白，也可以关联某项试炼",
+      ideaLinkLbl: "关联试炼（可选）", ideaLinkNone: "— 不关联，独立灵感 —", addIdea: "✦ 收入灵感袋",
+      ideaListTitle: "✦ 灵感袋", ideaEmpty: "灵感袋空空如也 ✦", ideaStandalone: "独立灵感", ideaLinkPrefix: "⚔ ",
+      moneyTitle: "◆ 记一笔卢比", moneyPhAmount: "金额 ¥", moneyPhNote: "备注（买 / 卖了什么）",
+      typeExpense: "支出", typeIncome: "收入", saveExpense: "存入钱袋",
+      daySumTitle: "◆ 当日汇总", lblExpense: "支出", lblIncome: "收入", detailTitle2: "◆ 钱袋明细", expenseEmpty: "钱袋空空 💰",
+      stats1: "◆ 本月支出分类", stats2: "◆ 最近 7 天支出趋势", stats3: "◆ 试炼完成率（近 7 天）",
+      statsNone: "无试炼", statsMonthEmpty: "本月卢比安然无恙",
+      themeTitle: "◆ 主题", saveTitle: "◆ 存档管理",
+      saveDesc: "数据保存在本机浏览器中。换设备或换浏览器时，先在旧设备「导出存档」，再在新设备「导入存档」即可同步。",
+      exportBtn: "📤 导出存档", importBtn: "📥 导入存档", dangerTitle: "◆ 危险区域", clearBtn: "清空全部存档",
+      foot: "HYRULE · ADVENTURE LOG ◆ 数据仅存于本机", filePrefix: "冒险手帐存档",
+      confirmDelTask: "删除这条试炼？（含其进展 / 难点 / 备注）",
+      confirmDelLog: "删除这条日志？", confirmDelIdea: "删除这条灵感？", confirmDelExpense: "删除这笔账单？",
+      confirmImport: "导入会覆盖当前全部存档，确定继续？", importBad: "存档格式不正确，导入失败",
+      confirmClear: "将删除全部试炼、日志、灵感与卢比记录，且无法恢复！确定清空？",
+      ideaNeed: "先写下灵感内容 ✦", amountBad: "请输入正确的金额",
+      tabDiet: "🍲 料理", dietTitle: "◆ 今天的料理", dietPh: "今天吃了什么？烤苹果还是兽肉饭…", addDiet: "下锅",
+      dietListTitle: "◆ 料理账", dietEmpty: "今天还没开火 🍲", confirmDelDiet: "倒掉这道料理？",
+      stat4: "随行收益", themeHint: "「自动」在 18:00 与 6:00 之间为白天", sumPet: "◆ 伙伴照料",
+      tabPet: "🐴 伙伴", tabStock: "💠 宝库",
+      petAddTitle: "◆ 新的伙伴", petNamePh: "给它起个名字", petNotePh: "品种，或一句寄语", addPet: "结伴同行",
+      petListTitle: "◆ 同行伙伴", petEmpty: "还没有伙伴同行 🐾",
+      careTitle: "◆ 今日照料", careEmpty: "先去寻一位伙伴吧 🐾", careHint: "轻点即记录",
+      petLogTitle: "◆ 照料札记", petLogEmpty: "今天还没有照料记录",
+      confirmDelPet: "让这位伙伴离去？（含照料与体重）", confirmDelPetLog: "删除这条照料记录？",
+      weightTitle: "◆ 体重石碑", weightPh: "kg", addWeight: "刻下", weightEmpty: "还没有称量记录",
+      editPet: "◆ 修改伙伴", editBirth: "生日",
+      care_feed: "喂食", care_water: "换水", care_litter: "清理", care_walk: "散步", care_play: "玩耍", care_med: "用药", care_bath: "洗浴",
+      stockAddTitle: "◆ 记一件宝物", stockNamePh: "名称", stockCodePh: "编号", stockSharesPh: "数量", stockCostPh: "成本", stockPricePh: "现价", addStock: "入库",
+      stockSumTitle: "◆ 宝库总账", stockMV: "市值", stockCostLbl: "成本", stockPL: "盈亏", stockPLRate: "幅度",
+      stockListTitle: "◆ 宝库清单", stockEmpty: "宝库空空 💠",
+      stockCurveTitle: "◆ 宝库市值走势", stockCurveEmpty: "还需几日才有走势",
+      confirmDelStock: "移出这件宝物？", priceNeed: "请输入正确的现价", sharesBad: "请输入正确的数量",
+      editStock: "◆ 修改宝物", editShares: "数量", editCost: "成本", editPrice: "现价", editCode: "编号"
+    },
+    wes: {
+      title: "门童手记", rune: "◆ ─── MENDEL ／ 1932 ─── ◆",
+      stat1: "今日行程", stat2: "今日开销", stat3: "本月开销",
+      tabTodo: "🍰 行程", tabProgress: "📖 台本", tabInspire: "💌 明信片", tabMoney: "🛎️ 前台账", tabStats: "🖼️ 相簿", tabSettings: "🧳 寄存处",
+      taskPh: "今天要为客人安排些什么？", addTask: "安排上",
+      listTitle: "◆ 今日行程", clickHint: "点击行程名称，可补记进展、卡点与便签",
+      upcomingTitle: "◆ 接下来", upcomingHint: "未来 14 天的行程",
+      listEmpty: "行程簿干干净净，先享用下午茶 🍰", upcomingEmpty: "接下来两周没有安排，喝杯茶 ☕",
+      detailTitle: "◆ 行程备忘", lblProgress: "进展", lblDifficulty: "卡点", lblNote: "便签",
+      dlgPhProgress: "办到哪一步了？", dlgPhDifficulty: "哪里出了岔子？", dlgPhNote: "给客人留张便签",
+      btnSave: "存好", btnCancel: "先不用", confirmYes: "照办",
+      editEntry: "◆ 修订一页", editName: "名目", editDate: "日期", editText: "内容", editMeal: "茶点", editAmount: "金额", editCat: "类别", editType: "类型", editLink: "关联行程",
+      sumTitle: "◆ 今日回顾页", sumYd: "昨日", sumTd: "今日", sum2d: "前日", sumPlans: "◆ 行程与完成", sumUn: "未办妥", sumCarry: "排到明天", sumCarryAll: "全部顺延", sumMoney: "◆ 账房", sumDiet: "◆ 茶点", sumRecords: "◆ 台本", sumIdeas: "◆ 明信片", sumNone: "空空如也",
+      logPh: "台本一页：今天的故事、脾气与茶点…", addLog: "收录进台本",
+      logTitle: "◆ 台本", logHint: "最新一页在最上", logEmpty: "台本还是空白的 📖",
+      ideaTitle: "💌 寄一张明信片", ideaPh: "亲爱的朋友：见字如面…",
+      ideaLinkLbl: "与哪条行程有关（可不选）", ideaLinkNone: "— 不关联，单独一张 —", addIdea: "寄出 ✉️",
+      ideaListTitle: "💌 明信片墙", ideaEmpty: "还没有明信片寄到 💌", ideaStandalone: "孤品一张", ideaLinkPrefix: "✉ ",
+      moneyTitle: "◆ 前台账：记一笔", moneyPhAmount: "金额 ¥", moneyPhNote: "备注（买了什么小玩意）",
+      typeExpense: "支出", typeIncome: "收入", saveExpense: "记入账本",
+      daySumTitle: "◆ 今日账目", lblExpense: "支出", lblIncome: "收入", detailTitle2: "◆ 账本明细", expenseEmpty: "账本干干净净 💐",
+      stats1: "◆ 本月开销分类", stats2: "◆ 最近 7 天开销", stats3: "◆ 行程完成率（近 7 天）",
+      statsNone: "无行程", statsMonthEmpty: "本月开销分文未有",
+      themeTitle: "◆ 主题", saveTitle: "◆ 行李寄存处",
+      saveDesc: "行李存在本机前台。换酒店时，先在旧前台「寄出行李」，再到新前台「取回行李」即可。",
+      exportBtn: "📤 寄出行李", importBtn: "📥 取回行李", dangerTitle: "◆ 小心易碎", clearBtn: "清空全部行李",
+      foot: "MENDEL'S · GRAND BUDAPEST ◆ 数据仅存于本机", filePrefix: "门童手记存档",
+      confirmDelTask: "取消这条行程？（连同进展 / 卡点 / 便签）",
+      confirmDelLog: "撕掉这页台本？", confirmDelIdea: "销毁这张明信片？", confirmDelExpense: "划掉这笔账？",
+      confirmImport: "导入会覆盖当前全部行李，确定继续？", importBad: "行李单格式不对，取回失败",
+      confirmClear: "全部行李将清空且无法找回！确定？",
+      ideaNeed: "先写明信片内容 ✉️", amountBad: "请输入正确的金额",
+      tabDiet: "🥐 茶点", dietTitle: "◆ 今天的茶点", dietPh: "今天享用了什么？可颂还是马卡龙…", addDiet: "上桌",
+      dietListTitle: "◆ 茶点记录", dietEmpty: "今天还没用茶点 🥐", confirmDelDiet: "撤下这碟茶点？",
+      stat4: "今日行情", themeHint: "「自动」在 18:00 与 6:00 之间为白天", sumPet: "◆ 住客照料",
+      tabPet: "🐩 住客", tabStock: "🏦 金库",
+      petAddTitle: "◆ 新住客登记", petNamePh: "住客姓名", petNotePh: "品种／备注", addPet: "办理入住",
+      petListTitle: "◆ 住客名册", petEmpty: "名册上还没有住客 🐾",
+      careTitle: "◆ 今日客房服务", careEmpty: "先登记一位住客 🐾", careHint: "轻点即登记",
+      petLogTitle: "◆ 服务记录", petLogEmpty: "今天还没有服务记录",
+      confirmDelPet: "为这位住客办理退房？（含记录）", confirmDelPetLog: "划掉这条服务记录？",
+      weightTitle: "◆ 体重登记", weightPh: "kg", addWeight: "登记", weightEmpty: "尚无登记",
+      editPet: "◆ 修改住客", editBirth: "生日",
+      care_feed: "供餐", care_water: "换水", care_litter: "打扫", care_walk: "散步", care_play: "陪玩", care_med: "送药", care_bath: "沐浴",
+      stockAddTitle: "◆ 金库入库", stockNamePh: "名称", stockCodePh: "编号", stockSharesPh: "份数", stockCostPh: "成本", stockPricePh: "现价", addStock: "入库",
+      stockSumTitle: "◆ 金库总账", stockMV: "估值", stockCostLbl: "成本", stockPL: "盈亏", stockPLRate: "幅度",
+      stockListTitle: "◆ 金库清单", stockEmpty: "金库空空 🏦",
+      stockCurveTitle: "◆ 金库估值走势", stockCurveEmpty: "还需几日才有走势",
+      confirmDelStock: "出库这一笔？", priceNeed: "请输入正确的现价", sharesBad: "请输入正确的份数",
+      editStock: "◆ 修改一笔", editShares: "份数", editCost: "成本", editPrice: "现价", editCode: "编号"
+    },
+    madmen: {
+      title: "麦迪逊手帐", rune: "◆ ─── MADISON ／ AVE. ─── ◆",
+      stat1: "今日简报", stat2: "今日经费", stat3: "本月经费",
+      tabTodo: "📝 简报", tabProgress: "🖋️ 纪要", tabInspire: "💡 创意", tabMoney: "💵 经费", tabStats: "📈 数据", tabSettings: "🗄️ 档案柜",
+      taskPh: "新的 brief 是什么？", addTask: "立项",
+      listTitle: "◆ 今日简报", clickHint: "点击简报名称，可记录进展、阻碍与备注",
+      upcomingTitle: "◆ 接下来的档期", upcomingHint: "未来 14 天的简报",
+      listEmpty: "没有排期，先去倒一杯 🥃", upcomingEmpty: "未来两周档期空着，喝一杯 🥃",
+      detailTitle: "◆ 简报详情", lblProgress: "进展", lblDifficulty: "阻碍", lblNote: "备注",
+      dlgPhProgress: "推进到哪了？", dlgPhDifficulty: "客户卡在哪儿？", dlgPhNote: "其他备注",
+      btnSave: "归档", btnCancel: "取消", confirmYes: "确认",
+      editEntry: "◆ 修订版本", editName: "名称", editDate: "日期", editText: "内容", editMeal: "餐次", editAmount: "金额", editCat: "分类", editType: "类型", editLink: "关联简报",
+      sumTitle: "◆ 每日简报", sumYd: "昨日", sumTd: "今日", sum2d: "前日", sumPlans: "◆ 简报与进度", sumUn: "未结项", sumCarry: "滚入明日", sumCarryAll: "全部滚入", sumMoney: "◆ 经费", sumDiet: "◆ 应酬", sumRecords: "◆ 纪要", sumIdeas: "◆ 提案", sumNone: "暂无记录",
+      logPh: "会议纪要：今天谈成了什么、卡在哪儿…", addLog: "归档纪要",
+      logTitle: "◆ 会议纪要", logHint: "最新在最上", logEmpty: "还没有纪要 🖋️",
+      ideaTitle: "💡 创意提案", ideaPh: "一个绝妙的点子，值一场 pitch…",
+      ideaLinkLbl: "关联哪条简报（可选）", ideaLinkNone: "— 不关联，自由提案 —", addIdea: "提交提案",
+      ideaListTitle: "💡 点子库", ideaEmpty: "点子库空空 💡", ideaStandalone: "独立提案", ideaLinkPrefix: "📝 ",
+      moneyTitle: "◆ 报一张经费", moneyPhAmount: "金额 ¥", moneyPhNote: "备注（花在哪儿）",
+      typeExpense: "支出", typeIncome: "收入", saveExpense: "报销入账",
+      daySumTitle: "◆ 今日经费", lblExpense: "支出", lblIncome: "收入", detailTitle2: "◆ 报销明细", expenseEmpty: "暂无报销单 💵",
+      stats1: "◆ 本月经费分类", stats2: "◆ 最近 7 天经费", stats3: "◆ 简报完成率（近 7 天）",
+      statsNone: "无简报", statsMonthEmpty: "本月经费分文未动",
+      themeTitle: "◆ 主题", saveTitle: "◆ 档案柜",
+      saveDesc: "档案存放在本机。换办公室时，先在旧档案柜「调出档案」，再到新档案柜「归还档案」即可。",
+      exportBtn: "📤 调出档案", importBtn: "📥 归还档案", dangerTitle: "◆ 机密文件", clearBtn: "销毁全部档案",
+      foot: "STERLING COOPER · MADISON AVE ◆ 数据仅存于本机", filePrefix: "麦迪逊手帐档案",
+      confirmDelTask: "撤销这条简报？（含进展 / 阻碍 / 备注）",
+      confirmDelLog: "作废这份纪要？", confirmDelIdea: "毙掉这个点子？", confirmDelExpense: "驳回这笔报销？",
+      confirmImport: "导入会覆盖当前全部档案，确定继续？", importBad: "档案格式不对，归还失败",
+      confirmClear: "全部档案将销毁且无法恢复！确定？",
+      ideaNeed: "先写下点子 💡", amountBad: "请输入正确的金额",
+      tabDiet: "🍽️ 应酬", dietTitle: "◆ 今天吃了什么", dietPh: "牛排还是三明治？还是又一杯…", addDiet: "记录",
+      dietListTitle: "◆ 餐桌纪要", dietEmpty: "今天还没吃饭 🍽️", confirmDelDiet: "撤掉这道菜？",
+      stat4: "账户表现", themeHint: "「自动」在 18:00 与 6:00 之间为白天", sumPet: "◆ 家里",
+      tabPet: "🐕 家里", tabStock: "📈 行情",
+      petAddTitle: "◆ 添个家庭成员", petNamePh: "名字", petNotePh: "品种／备注", addPet: "登记",
+      petListTitle: "◆ 家庭成员", petEmpty: "家里还没有宠物 🐾",
+      careTitle: "◆ 今日照料", careEmpty: "先登记一只 🐾", careHint: "点一下即记录",
+      petLogTitle: "◆ 照料记录", petLogEmpty: "今天还没有记录",
+      confirmDelPet: "把这位家庭成员送走？（含记录）", confirmDelPetLog: "划掉这条记录？",
+      weightTitle: "◆ 体重", weightPh: "kg", addWeight: "记录", weightEmpty: "还没有记录",
+      editPet: "◆ 修改档案", editBirth: "生日",
+      care_feed: "喂食", care_water: "换水", care_litter: "清理", care_walk: "遛弯", care_play: "陪玩", care_med: "用药", care_bath: "洗澡",
+      stockAddTitle: "◆ 建仓", stockNamePh: "名称", stockCodePh: "代码", stockSharesPh: "股数", stockCostPh: "成本价", stockPricePh: "现价", addStock: "入账",
+      stockSumTitle: "◆ 持仓总账", stockMV: "市值", stockCostLbl: "成本", stockPL: "浮动盈亏", stockPLRate: "幅度",
+      stockListTitle: "◆ 持仓明细", stockEmpty: "空仓，手里没票",
+      stockCurveTitle: "◆ 市值走势", stockCurveEmpty: "再等一天才有曲线",
+      confirmDelStock: "清掉这一笔？", priceNeed: "请输入正确的现价", sharesBad: "请输入正确的股数",
+      editStock: "◆ 修改持仓", editShares: "股数", editCost: "成本价", editPrice: "现价", editCode: "代码"
+    },
+    lost: {
+      title: "蓝调时刻", rune: "◆ ─── TOKYO ／ 25:00 ─── ◆",
+      stat1: "今日予定", stat2: "今日支出", stat3: "本月支出",
+      tabTodo: "🗼 予定", tabProgress: "🌙 深夜日记", tabInspire: "🥃 吧台便签", tabMoney: "💴 账单", tabStats: "🔭 俯瞰", tabSettings: "🔒 保险箱",
+      taskPh: "明天，或者醒来以后要做的事…", addTask: "先记下",
+      listTitle: "◆ 今日予定", clickHint: "点击予定名称，可记录进展、卡住的地方、备注",
+      upcomingTitle: "◆ 接下来的日子", upcomingHint: "未来 14 天的予定",
+      listEmpty: "今天无事发生，睡个回笼觉 🌙", upcomingEmpty: "接下来的日子还空着 🌃",
+      detailTitle: "◆ 予定详情", lblProgress: "进展", lblDifficulty: "卡住的地方", lblNote: "备注",
+      dlgPhProgress: "走到哪一步了？", dlgPhDifficulty: "卡在哪儿了？", dlgPhNote: "顺手记一笔",
+      btnSave: "放下", btnCancel: "算了", confirmYes: "嗯",
+      editEntry: "◆ 书き直し", editName: "名称", editDate: "日期", editText: "内容", editMeal: "餐次", editAmount: "金额", editCat: "分类", editType: "类型", editLink: "关联予定",
+      sumTitle: "◆ 毎日のまとめ", sumYd: "昨日", sumTd: "今日", sum2d: "一昨日", sumPlans: "◆ 予定と達成", sumUn: "未完了", sumCarry: "明日へ繰越", sumCarryAll: "全部繰越", sumMoney: "◆ 支出", sumDiet: "◆ 食事", sumRecords: "◆ 深夜日記", sumIdeas: "◆ 吧台便签", sumNone: "何もない",
+      logPh: "凌晨三点睡不着？写下来吧…", addLog: "留一段",
+      logTitle: "◆ 深夜日记", logHint: "最新在最上", logEmpty: "还没有写下来 🌙",
+      ideaTitle: "🥃 吧台便签", ideaPh: "秘密倾聊，只说给调酒师听…",
+      ideaLinkLbl: "跟哪件予定有关（可选）", ideaLinkNone: "— 不关联，随风去吧 —", addIdea: "轻轻放下 🥃",
+      ideaListTitle: "🥃 便签收集", ideaEmpty: "便签还空着 🥃", ideaStandalone: "一闪而过", ideaLinkPrefix: "🌙 ",
+      moneyTitle: "◆ 结一笔账", moneyPhAmount: "金额 ¥", moneyPhNote: "备注（买了什么）",
+      typeExpense: "支出", typeIncome: "收入", saveExpense: "结账",
+      daySumTitle: "◆ 今日账单", lblExpense: "支出", lblIncome: "收入", detailTitle2: "◆ 账单明细", expenseEmpty: "今天还没有消费 💴",
+      stats1: "◆ 本月支出分类", stats2: "◆ 最近 7 天支出", stats3: "◆ 予定完成率（近 7 天）",
+      statsNone: "无予定", statsMonthEmpty: "本月支出为零",
+      themeTitle: "◆ 主题", saveTitle: "◆ 保险箱",
+      saveDesc: "东西锁在本机保险箱里。换酒店时，先在旧保险箱「备份」，再在新保险箱「还原」即可。",
+      exportBtn: "📤 备份", importBtn: "📥 还原", dangerTitle: "◆ 请勿触摸", clearBtn: "清空保险箱",
+      foot: "TOKYO · BLUE HOUR ◆ 数据仅存于本机", filePrefix: "蓝调时刻备份",
+      confirmDelTask: "撕掉这条予定？（含进展 / 卡住的地方 / 备注）",
+      confirmDelLog: "撕掉这一段？", confirmDelIdea: "扔掉这张便签？", confirmDelExpense: "划掉这笔账？",
+      confirmImport: "还原会覆盖当前全部内容，确定继续？", importBad: "备份格式不对，还原失败",
+      confirmClear: "保险箱将被清空且无法恢复！确定？",
+      ideaNeed: "先写一句吧 🥃", amountBad: "请输入正确的金额",
+      tabDiet: "🍜 拉面", dietTitle: "◆ 今天吃了什么", dietPh: "拉面、饭团，还是便利店的关东煮…", addDiet: "开动",
+      dietListTitle: "◆ 进食记录", dietEmpty: "胃还空着 🍜", confirmDelDiet: "清掉这条记录？",
+      stat4: "账户起落", themeHint: "「自动」在 18:00 与 6:00 之间为白天", sumPet: "◆ 房间里的",
+      tabPet: "🐈 猫", tabStock: "📉 行情",
+      petAddTitle: "◆ 多一只", petNamePh: "名字", petNotePh: "品种，或者一句话", addPet: "带回来",
+      petListTitle: "◆ 房间里的", petEmpty: "房间很静 🐾",
+      careTitle: "◆ 今日照顾", careEmpty: "先带一只回来 🐾", careHint: "点一下就好",
+      petLogTitle: "◆ 照顾记录", petLogEmpty: "今天还没有记录",
+      confirmDelPet: "让它走？（含记录）", confirmDelPetLog: "删掉这条？",
+      weightTitle: "◆ 体重", weightPh: "kg", addWeight: "记下", weightEmpty: "还没称过",
+      editPet: "◆ 改一下", editBirth: "生日",
+      care_feed: "喂食", care_water: "换水", care_litter: "清理", care_walk: "散步", care_play: "玩耍", care_med: "用药", care_bath: "洗澡",
+      stockAddTitle: "◆ 记一笔", stockNamePh: "名称", stockCodePh: "代码", stockSharesPh: "股数", stockCostPh: "成本价", stockPricePh: "现价", addStock: "记下",
+      stockSumTitle: "◆ 总账", stockMV: "市值", stockCostLbl: "成本", stockPL: "浮动盈亏", stockPLRate: "幅度",
+      stockListTitle: "◆ 持仓", stockEmpty: "空仓，什么都没有",
+      stockCurveTitle: "◆ 这些天的市值", stockCurveEmpty: "再等一天",
+      confirmDelStock: "清掉这笔？", priceNeed: "现价不对", sharesBad: "股数不对",
+      editStock: "◆ 改一笔", editShares: "股数", editCost: "成本价", editPrice: "现价", editCode: "代码"
+    }
+  };
+
+  var THEMES = [
+    { id: "wang",   label: "🚬 王家卫" },
+    { id: "zelda",  label: "⚔️ 塞尔达传说" },
+    { id: "wes",    label: "🎀 韦斯·安德森" },
+    { id: "madmen", label: "🥃 广告狂人" },
+    { id: "lost",   label: "🌃 迷失东京" }
+  ];
+  var MODES = [
+    { id: "day",  label: "☀️ 白天" },
+    { id: "night",label: "🌙 夜晚" },
+    { id: "auto", label: "🌗 自动（18:00 切换）" }
+  ];
+
+  function getThemePref() { return localStorage.getItem(THEME_KEY) || "wang"; }
+  function getModePref() { return localStorage.getItem(MODE_KEY) || "auto"; }
+  function isNight() {
+    var mode = getModePref();
+    if (mode === "night") return true;
+    if (mode === "day") return false;
+    var h = new Date().getHours();
+    return h >= 18 || h < 6;
+  }
+  function applyTheme() {
+    document.body.className = "theme-" + getThemePref() + "-" + (isNight() ? "night" : "day");
+  }
+  function T(k) { return I18N[getThemePref()][k]; }
+
+  function applyI18n() {
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      el.textContent = T(el.dataset.i18n);
+    });
+    document.querySelectorAll("[data-i18n-ph]").forEach(function (el) {
+      el.placeholder = T(el.dataset.i18nPh);
+    });
+    document.title = T("title") + " · 个人计划助手";
+  }
+
+  function renderThemeChips() {
+    var pref = getThemePref();
+    $("themeChips").innerHTML = THEMES.map(function (t) {
+      return '<button data-theme="' + t.id + '" class="' + (t.id === pref ? "on" : "") + '">' + t.label + "</button>";
+    }).join("");
+    var mode = getModePref();
+    $("modeChips").innerHTML = MODES.map(function (m) {
+      return '<button data-mode="' + m.id + '" class="' + (m.id === mode ? "on" : "") + '">' + m.label + "</button>";
+    }).join("");
+  }
+  $("themeChips").addEventListener("click", function (e) {
+    var t = e.target.dataset && e.target.dataset.theme;
+    if (!t) return;
+    localStorage.setItem(THEME_KEY, t);
+    applyTheme(); applyI18n(); renderThemeChips(); renderAll();
+  });
+  $("modeChips").addEventListener("click", function (e) {
+    var m = e.target.dataset && e.target.dataset.mode;
+    if (!m) return;
+    localStorage.setItem(MODE_KEY, m);
+    applyTheme(); renderThemeChips();
+  });
+  setInterval(function () { if (getModePref() === "auto") applyTheme(); }, 60000);
+
+  var today = fmtDate(new Date());
+  var state = load();
+  var ui = { tab: "todo", todoDate: today, progressDate: today, expenseDate: today, expenseCat: "food", dietDate: today, dietMeal: "早餐", careDate: today };
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (raw) {
+        var s = JSON.parse(raw);
+        return {
+          tasks: s.tasks || [],
+          progress: s.progress || [],
+          expenses: s.expenses || [],
+          ideas: s.ideas || [],
+          diet: s.diet || [],
+          pets: s.pets || [],
+          petLogs: s.petLogs || [],
+          weights: s.weights || [],
+          stocks: s.stocks || [],
+          snaps: s.snaps || []
+        };
+      }
+      /* 兼容迁移 v1 数据 */
+      var old = localStorage.getItem("personal-planner-v1");
+      if (old) {
+        var o = JSON.parse(old);
+        return {
+          tasks: (o.tasks || []).map(function (t) {
+            t.progress = t.progress || "";
+            t.difficulty = t.difficulty || "";
+            t.note = t.note || "";
+            return t;
+          }),
+          progress: o.progress || [],
+          expenses: o.expenses || [],
+          ideas: [],
+          diet: [],
+          pets: [], petLogs: [], weights: [], stocks: [], snaps: []
+        };
+      }
+    } catch (e) { /* 损坏则重置 */ }
+    return { tasks: [], progress: [], expenses: [], ideas: [], diet: [], pets: [], petLogs: [], weights: [], stocks: [], snaps: [] };
+  }
+  function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
+  function fmtDate(d) {
+    var p = function (n) { return n < 10 ? "0" + n : "" + n; };
+    return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
+  }
+  function addDays(n) { var d = new Date(); d.setDate(d.getDate() + n); return fmtDate(d); }
+  function fmtMoney(n) {
+    return "¥" + Number(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+  function $(id) { return document.getElementById(id); }
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function taskHasDetail(t) {
+    return !!(t.progress || t.difficulty || t.note);
+  }
+
+  function confirmBox(msg, onYes) {
+    $("confirmMsg").textContent = msg;
+    var dlg = $("confirmDlg");
+    dlg.showModal();
+    $("confirmYes").onclick = function () { dlg.close(); onYes(); };
+    $("confirmNo").onclick = function () { dlg.close(); };
+  }
+
+  var CATS = [
+    { id: "food",   name: "餐饮", icon: "🍜" },
+    { id: "home",   name: "住房", icon: "🏠" },
+    { id: "trans",  name: "交通", icon: "🚕" },
+    { id: "shop",   name: "购物", icon: "🛒" },
+    { id: "fun",    name: "娱乐", icon: "🎮" },
+    { id: "travel", name: "旅行", icon: "✈️" },
+    { id: "health", name: "医疗", icon: "💊" },
+    { id: "other",  name: "其他", icon: "📦" }
+  ];
+  var catMap = {};
+  CATS.forEach(function (c) { catMap[c.id] = c; });
+
+  var MEALS = ["早餐", "午餐", "晚餐", "宵夜", "其他"];
+
+  var PET_TYPES = [
+    { id: "cat",  icon: "🐈", name: "猫" },
+    { id: "dog",  icon: "🐕", name: "狗" },
+    { id: "bird", icon: "🕊️", name: "鸟" },
+    { id: "fish", icon: "🐟", name: "鱼" },
+    { id: "other",icon: "🐾", name: "其他" }
+  ];
+  var petTypeMap = {};
+  PET_TYPES.forEach(function (p) { petTypeMap[p.id] = p; });
+  var CARE_ACTS = ["feed", "water", "litter", "walk", "play", "med", "bath"];
+  var CARE_ICON = { feed: "🍚", water: "💧", litter: "🧹", walk: "🚶", play: "🎾", med: "💊", bath: "🛁" };
+
+  var weekNames = ["日", "一", "二", "三", "四", "五", "六"];
+  var now = new Date();
+  $("todayText").textContent =
+    now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日 · 星期" + weekNames[now.getDay()];
+
+  /* ---------- Tabs ---------- */
+  var tabs = document.querySelectorAll("nav.tabs button");
+  tabs.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      tabs.forEach(function (b) { b.classList.remove("active"); });
+      btn.classList.add("active");
+      ui.tab = btn.dataset.tab;
+      ["todo", "progress", "inspire", "money", "diet", "pet", "stock", "stats", "settings"].forEach(function (t) {
+        $("tab-" + t).style.display = t === ui.tab ? "" : "none";
+      });
+      if (ui.tab === "stats") renderStats();
+      if (ui.tab === "inspire") renderIdeaLinkSelect();
+      if (ui.tab === "pet") renderPetAll();
+      if (ui.tab === "stock") renderStockAll();
+    });
+  });
+
+  /* ---------- 待办 ---------- */
+  $("todoDate").value = today;
+  $("todoDate").addEventListener("change", function () { ui.todoDate = this.value || today; renderTodoAll(); });
+
+  var CHIP_DEFS = [
+    { label: "今天", n: 0 }, { label: "明天", n: 1 }, { label: "后天", n: 2 }, { label: "+3天", n: 3 }, { label: "+7天", n: 7 }
+  ];
+  function renderChips() {
+    $("todoChips").innerHTML = CHIP_DEFS.map(function (c) {
+      var d = addDays(c.n);
+      return '<button data-d="' + d + '" class="' + (d === ui.todoDate ? "on" : "") + '">' +
+        c.label + (c.n === 0 ? "" : " · " + d.slice(5).replace("-", "/")) + "</button>";
+    }).join("");
+  }
+  $("todoChips").addEventListener("click", function (e) {
+    var d = e.target.dataset && e.target.dataset.d;
+    if (!d) return;
+    ui.todoDate = d;
+    $("todoDate").value = d;
+    renderTodoAll();
+  });
+
+  function addTask() {
+    var name = $("taskInput").value.trim();
+    if (!name) return;
+    state.tasks.push({
+      id: Date.now() + "" + Math.floor(Math.random() * 1e4),
+      date: ui.todoDate, name: name, done: false,
+      progress: "", difficulty: "", note: ""
+    });
+    $("taskInput").value = "";
+    save(); renderTodoAll(); renderHeaderStats();
+  }
+  $("addTaskBtn").addEventListener("click", addTask);
+  $("taskInput").addEventListener("keydown", function (e) { if (e.key === "Enter") addTask(); });
+
+  function renderTasks() {
+    var list = state.tasks.filter(function (t) { return t.date === ui.todoDate; });
+    var done = list.filter(function (t) { return t.done; }).length;
+    $("taskCount").textContent = list.length ? done + "/" + list.length : "";
+    if (!list.length) {
+      $("taskList").innerHTML = '<div class="empty">' + T("listEmpty") + "</div>";
+      return;
+    }
+    $("taskList").innerHTML = list.map(function (t) {
+      return '<div class="task' + (t.done ? " done" : "") + '">' +
+        '<input type="checkbox" data-id="' + t.id + '"' + (t.done ? " checked" : "") + ">" +
+        '<div class="name" data-open="' + t.id + '">' + esc(t.name) + "</div>" +
+        (taskHasDetail(t) ? '<span class="badge">📝</span>' : "") +
+        (t.deferred ? '<span class="badge">↪️</span>' : "") +
+        '<span class="del" data-id="' + t.id + '">✕</span></div>';
+    }).join("");
+  }
+
+  function renderUpcoming() {
+    var end = addDays(14);
+    var map = {};
+    state.tasks.forEach(function (t) {
+      if (t.date > today && t.date <= end && !t.done) {
+        (map[t.date] = map[t.date] || []).push(t);
+      }
+    });
+    var dates = Object.keys(map).sort();
+    if (!dates.length) {
+      $("upcomingList").innerHTML = '<div class="empty">' + T("upcomingEmpty") + "</div>";
+      return;
+    }
+    $("upcomingList").innerHTML = dates.map(function (d) {
+      var wd = "周" + weekNames[new Date(d.replace(/-/g, "/")).getDay()];
+      return '<div class="up-group"><div class="up-date">' + d.slice(5).replace("-", "/") + " · " + wd + "</div>" +
+        map[d].map(function (t) { return '<div class="up-item">' + esc(t.name) + "</div>"; }).join("") +
+        "</div>";
+    }).join("");
+  }
+
+  function renderTodoAll() {
+    renderChips();
+    renderTasks();
+    renderUpcoming();
+  }
+
+  $("taskList").addEventListener("click", function (e) {
+    var el = e.target;
+    var open = el.dataset && el.dataset.open;
+    if (open) { openTaskDlg(open); return; }
+    var id = el.dataset && el.dataset.id;
+    if (id && el.classList.contains("del")) {
+      confirmBox(T("confirmDelTask"), function () {
+        state.tasks = state.tasks.filter(function (t) { return t.id !== id; });
+        save(); renderTodoAll(); renderHeaderStats();
+      });
+    }
+  });
+  $("taskList").addEventListener("change", function (e) {
+    var id = e.target.dataset && e.target.dataset.id;
+    if (!id) return;
+    state.tasks.forEach(function (t) { if (t.id === id) t.done = e.target.checked; });
+    save(); renderTodoAll(); renderHeaderStats();
+  });
+
+  /* 任务详情弹窗 */
+  var dlgTaskId = null;
+  function openTaskDlg(id) {
+    var t = null;
+    state.tasks.forEach(function (x) { if (x.id === id) t = x; });
+    if (!t) return;
+    dlgTaskId = id;
+    $("dlgName").value = t.name;
+    $("dlgDate").value = t.date;
+    $("dlgProgress").value = t.progress || "";
+    $("dlgDifficulty").value = t.difficulty || "";
+    $("dlgNote").value = t.note || "";
+    $("taskDlg").showModal();
+  }
+  $("dlgSave").addEventListener("click", function () {
+    state.tasks.forEach(function (t) {
+      if (t.id === dlgTaskId) {
+        var nn = $("dlgName").value.trim();
+        if (nn) t.name = nn;
+        t.date = $("dlgDate").value || t.date;
+        t.progress = $("dlgProgress").value.trim();
+        t.difficulty = $("dlgDifficulty").value.trim();
+        t.note = $("dlgNote").value.trim();
+      }
+    });
+    $("taskDlg").close();
+    save(); renderTodoAll();
+  });
+  $("dlgCancel").addEventListener("click", function () { $("taskDlg").close(); });
+
+  /* ---------- 记录（进展） ---------- */
+  $("progressDate").value = today;
+  $("progressDate").addEventListener("change", function () { ui.progressDate = this.value || today; });
+
+  $("addProgressBtn").addEventListener("click", function () {
+    var text = $("progressInput").value.trim();
+    if (!text) return;
+    state.progress.push({
+      id: Date.now() + "", date: ui.progressDate, text: text,
+      time: new Date().toLocaleTimeString("zh-CN", { hour12: false })
+    });
+    $("progressInput").value = "";
+    save(); renderProgress();
+  });
+
+  function renderProgress() {
+    var list = state.progress.slice().sort(function (a, b) { return b.id.localeCompare(a.id); });
+    if (!list.length) {
+      $("progressList").innerHTML = '<div class="empty">' + T("logEmpty") + "</div>";
+      return;
+    }
+    $("progressList").innerHTML = list.map(function (p) {
+      return '<div class="entry"><div class="time">' + esc(p.date) + " " + esc(p.time) +
+        ' <span class="del" data-del="' + p.id + '" style="float:right">✕</span><span class="del" data-edit="' + p.id + '" style="float:right;opacity:.55;margin-right:2px">✎</span></div>' +
+        '<div class="text">' + esc(p.text) + "</div></div>";
+    }).join("");
+  }
+  $("progressList").addEventListener("click", function (e) {
+    var id = e.target.dataset && e.target.dataset.del;
+    if (!id) return;
+    confirmBox(T("confirmDelLog"), function () {
+      state.progress = state.progress.filter(function (p) { return p.id !== id; });
+      save(); renderProgress();
+    });
+  });
+
+  /* ---------- 灵感 ---------- */
+  function renderIdeaLinkSelect() {
+    var keep = $("ideaLink").value;
+    var list = state.tasks.slice().sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+    $("ideaLink").innerHTML = '<option value="">' + T("ideaLinkNone") + "</option>" + list.map(function (t) {
+      return '<option value="' + t.id + '">' + esc(t.date.slice(5)) + " · " + esc(t.name) + "</option>";
+    }).join("");
+    $("ideaLink").value = keep;
+  }
+
+  $("addIdeaBtn").addEventListener("click", function () {
+    var text = $("ideaInput").value.trim();
+    if (!text) { alert(T("ideaNeed")); return; }
+    state.ideas.push({
+      id: Date.now() + "" + Math.floor(Math.random() * 1e4),
+      text: text,
+      taskId: $("ideaLink").value || null,
+      date: today,
+      time: new Date().toLocaleTimeString("zh-CN", { hour12: false })
+    });
+    $("ideaInput").value = "";
+    $("ideaLink").value = "";
+    save(); renderIdeas();
+  });
+
+  function findTask(id) {
+    var t = null;
+    state.tasks.forEach(function (x) { if (x.id === id) t = x; });
+    return t;
+  }
+
+  function renderIdeas() {
+    var list = state.ideas.slice().sort(function (a, b) { return b.id.localeCompare(a.id); });
+    $("ideaCount").textContent = list.length ? "共 " + list.length + " 条" : "";
+    if (!list.length) {
+      $("ideaList").innerHTML = '<div class="empty">' + T("ideaEmpty") + "</div>";
+      return;
+    }
+    $("ideaList").innerHTML = list.map(function (i) {
+      var t = i.taskId ? findTask(i.taskId) : null;
+      var chip = t
+        ? '<span class="link-chip">' + T("ideaLinkPrefix") + esc(t.date.slice(5)) + " " + esc(t.name) + "</span>"
+        : '<span class="link-chip" style="color:var(--gold);border-color:color-mix(in srgb, var(--gold) 40%, transparent);background:color-mix(in srgb, var(--gold) 8%, transparent)">' + T("ideaStandalone") + "</span>";
+      return '<div class="entry idea"><div class="time">' + esc(i.date) + " " + esc(i.time) +
+        chip + ' <span class="del" data-del="' + i.id + '" style="float:right">✕</span><span class="del" data-edit="' + i.id + '" style="float:right;opacity:.55;margin-right:2px">✎</span></div>' +
+        '<div class="text">' + esc(i.text) + "</div></div>";
+    }).join("");
+  }
+  $("ideaList").addEventListener("click", function (e) {
+    var id = e.target.dataset && e.target.dataset.del;
+    if (!id) return;
+    confirmBox(T("confirmDelIdea"), function () {
+      state.ideas = state.ideas.filter(function (x) { return x.id !== id; });
+      save(); renderIdeas();
+    });
+  });
+
+  /* ---------- 记账 ---------- */
+  $("expenseDate").value = today;
+  $("expenseDate").addEventListener("change", function () {
+    ui.expenseDate = this.value || today;
+    renderExpenseDay();
+  });
+
+  function renderQuickCats() {
+    $("quickCats").innerHTML = CATS.map(function (c) {
+      return '<button data-cat="' + c.id + '" class="' + (c.id === ui.expenseCat ? "on" : "") + '">' + c.icon + " " + c.name + "</button>";
+    }).join("");
+  }
+  $("quickCats").addEventListener("click", function (e) {
+    var cat = e.target.dataset && e.target.dataset.cat;
+    if (!cat) return;
+    ui.expenseCat = cat;
+    renderQuickCats();
+  });
+
+  $("addExpenseBtn").addEventListener("click", function () {
+    var amount = parseFloat($("expenseAmount").value);
+    if (!amount || amount <= 0) { alert(T("amountBad")); return; }
+    state.expenses.push({
+      id: Date.now() + "" + Math.floor(Math.random() * 1e4),
+      date: ui.expenseDate,
+      type: $("expenseType").value,
+      cat: $("expenseType").value === "income" ? "" : ui.expenseCat,
+      amount: Math.round(amount * 100) / 100,
+      note: $("expenseNote").value.trim()
+    });
+    $("expenseAmount").value = "";
+    $("expenseNote").value = "";
+    save(); renderExpenses(); renderExpenseDay(); renderHeaderStats();
+  });
+
+  function renderExpenseDay() {
+    var list = state.expenses.filter(function (e) { return e.date === ui.expenseDate; });
+    var exp = 0, inc = 0;
+    list.forEach(function (e) {
+      if (e.type === "expense") exp += e.amount; else inc += e.amount;
+    });
+    $("expenseDayText").textContent = ui.expenseDate;
+    $("dayExpense").textContent = fmtMoney(exp);
+    $("dayIncome").textContent = fmtMoney(inc);
+  }
+
+  function renderExpenses() {
+    var list = state.expenses.slice().sort(function (a, b) { return b.id.localeCompare(a.id); });
+    $("expenseCount").textContent = list.length ? "共 " + list.length + " 笔" : "";
+    if (!list.length) {
+      $("expenseList").innerHTML = '<div class="empty">' + T("expenseEmpty") + "</div>";
+      return;
+    }
+    $("expenseList").innerHTML = list.slice(0, 100).map(function (e) {
+      var c = catMap[e.cat] || { name: T("typeIncome"), icon: "💵" };
+      var sub = e.type === "income" ? T("typeIncome") : c.name;
+      return '<div class="expense"><div class="cat">' + c.icon + "</div>" +
+        '<div class="info"><div class="t">' + esc(e.note || sub) + "</div>" +
+        '<div class="s">' + esc(e.date) + " · " + sub + "</div></div>" +
+        '<div class="amount" style="color:' + (e.type === "income" ? "var(--green)" : "var(--red)") + '">' +
+        (e.type === "income" ? "+" : "-") + fmtMoney(e.amount) + "</div>" +
+        '<span class="del" data-del="' + e.id + '">✕</span><span class="del" data-edit="' + e.id + '" style="opacity:.55;margin-right:6px">✎</span></div>';
+    }).join("");
+  }
+  $("expenseList").addEventListener("click", function (e) {
+    var id = e.target.dataset && e.target.dataset.del;
+    if (!id) return;
+    confirmBox(T("confirmDelExpense"), function () {
+      state.expenses = state.expenses.filter(function (x) { return x.id !== id; });
+      save(); renderExpenses(); renderExpenseDay(); renderHeaderStats();
+    });
+  });
+
+  /* ---------- 料理（饮食） ---------- */
+  $("dietDate").value = today;
+  $("dietDate").addEventListener("change", function () { ui.dietDate = this.value || today; });
+
+  function renderDietMealChips() {
+    $("dietMealChips").innerHTML = MEALS.map(function (m) {
+      return '<button data-meal="' + m + '" class="' + (m === ui.dietMeal ? "on" : "") + '">' + m + "</button>";
+    }).join("");
+  }
+  $("dietMealChips").addEventListener("click", function (e) {
+    var m = e.target.dataset && e.target.dataset.meal;
+    if (!m) return;
+    ui.dietMeal = m;
+    renderDietMealChips();
+  });
+
+  $("addDietBtn").addEventListener("click", addDiet);
+  $("dietInput").addEventListener("keydown", function (e) { if (e.key === "Enter") addDiet(); });
+  function addDiet() {
+    var text = $("dietInput").value.trim();
+    if (!text) return;
+    state.diet.push({
+      id: Date.now() + "" + Math.floor(Math.random() * 1e4),
+      date: ui.dietDate,
+      meal: ui.dietMeal,
+      text: text
+    });
+    $("dietInput").value = "";
+    save(); renderDiet();
+  }
+
+  function renderDiet() {
+    var list = state.diet.slice().sort(function (a, b) { return b.id.localeCompare(a.id); });
+    $("dietCount").textContent = list.length ? "共 " + list.length + " 条" : "";
+    if (!list.length) {
+      $("dietList").innerHTML = '<div class="empty">' + T("dietEmpty") + "</div>";
+      return;
+    }
+    $("dietList").innerHTML = list.slice(0, 100).map(function (d) {
+      return '<div class="entry"><div class="time">' + esc(d.date) +
+        ' <span class="link-chip" style="margin-left:8px">' + esc(d.meal) + "</span>" +
+        ' <span class="del" data-del="' + d.id + '" style="float:right">✕</span><span class="del" data-edit="' + d.id + '" style="float:right;opacity:.55;margin-right:2px">✎</span></div>' +
+        '<div class="text">' + esc(d.text) + "</div></div>";
+    }).join("");
+  }
+  $("dietList").addEventListener("click", function (e) {
+    var id = e.target.dataset && e.target.dataset.del;
+    if (!id) return;
+    confirmBox(T("confirmDelDiet"), function () {
+      state.diet = state.diet.filter(function (x) { return x.id !== id; });
+      save(); renderDiet();
+    });
+  });
+
+  /* ---------- 宠物 ---------- */
+  function uid() { return Date.now() + "" + Math.floor(Math.random() * 1e4); }
+  function nowTime() { return new Date().toLocaleTimeString("zh-CN", { hour12: false }).slice(0, 5); }
+  function ageText(birth) {
+    if (!birth) return "";
+    var b = new Date(String(birth).replace(/-/g, "/"));
+    if (isNaN(b.getTime())) return "";
+    var n = new Date();
+    var m = (n.getFullYear() - b.getFullYear()) * 12 + (n.getMonth() - b.getMonth());
+    if (m < 0) return "";
+    if (m < 12) return m + " 个月";
+    return Math.floor(m / 12) + " 岁" + (m % 12 ? " " + (m % 12) + " 个月" : "");
+  }
+
+  $("careDate").value = today;
+  $("careDate").addEventListener("change", function () { ui.careDate = this.value || today; renderCare(); });
+
+  function renderPetSelects() {
+    $("petType").innerHTML = PET_TYPES.map(function (p) {
+      return '<option value="' + p.id + '">' + p.icon + " " + p.name + "</option>";
+    }).join("");
+    var keep = $("weightPet").value;
+    $("weightPet").innerHTML = state.pets.length ? state.pets.map(function (p) {
+      var tp = petTypeMap[p.type] || petTypeMap.other;
+      return '<option value="' + p.id + '">' + tp.icon + " " + esc(p.name) + "</option>";
+    }).join("") : '<option value="">—</option>';
+    if (keep) $("weightPet").value = keep;
+  }
+
+  $("addPetBtn").addEventListener("click", function () {
+    var name = $("petName").value.trim();
+    if (!name) return;
+    state.pets.push({ id: uid(), name: name, type: $("petType").value || "cat", birth: "", note: $("petNote").value.trim() });
+    $("petName").value = ""; $("petNote").value = "";
+    save(); renderPetAll();
+  });
+
+  function renderPets() {
+    $("petCount").textContent = state.pets.length ? "共 " + state.pets.length + " 位" : "";
+    if (!state.pets.length) {
+      $("petList").innerHTML = '<div class="empty">' + T("petEmpty") + "</div>";
+      return;
+    }
+    $("petList").innerHTML = state.pets.map(function (p) {
+      var tp = petTypeMap[p.type] || petTypeMap.other;
+      var meta = [tp.name, ageText(p.birth), p.note].filter(function (x) { return !!x; }).join(" · ");
+      return '<div class="pet"><div class="avatar">' + tp.icon + "</div>" +
+        '<div class="info"><div class="t">' + esc(p.name) + '</div><div class="s">' + esc(meta) + "</div></div>" +
+        '<span class="ico" data-pedit="' + p.id + '">✎</span>' +
+        '<span class="ico x" data-pdel="' + p.id + '">✕</span></div>';
+    }).join("");
+  }
+
+  function renderCare() {
+    if (!state.pets.length) {
+      $("careList").innerHTML = '<div class="empty">' + T("careEmpty") + "</div>";
+      return;
+    }
+    $("careList").innerHTML = state.pets.map(function (p) {
+      var tp = petTypeMap[p.type] || petTypeMap.other;
+      var logs = state.petLogs.filter(function (l) { return l.petId === p.id && l.date === ui.careDate; });
+      var tally = {};
+      logs.forEach(function (l) { tally[l.act] = (tally[l.act] || 0) + 1; });
+      var sum = CARE_ACTS.filter(function (a) { return tally[a]; }).map(function (a) {
+        return CARE_ICON[a] + T("care_" + a) + "×" + tally[a];
+      }).join(" ");
+      return '<div class="care-block"><div class="care-head">' +
+        '<span class="who">' + tp.icon + " " + esc(p.name) + "</span>" +
+        '<span class="today">' + (sum || "—") + "</span></div>" +
+        '<div class="care-acts">' + CARE_ACTS.map(function (a) {
+          return '<button data-care="' + p.id + "-" + a + '">' + CARE_ICON[a] + " " + T("care_" + a) + "</button>";
+        }).join("") + "</div></div>";
+    }).join("");
+  }
+
+  $("careList").addEventListener("click", function (e) {
+    var v = e.target.dataset && e.target.dataset.care;
+    if (!v) return;
+    var idx = v.lastIndexOf("-");
+    var petId = v.slice(0, idx), act = v.slice(idx + 1);
+    state.petLogs.push({ id: uid(), petId: petId, act: act, date: ui.careDate, time: nowTime() });
+    save(); renderCare(); renderPetLogs(); renderSum();
+  });
+
+  function renderPetLogs() {
+    var list = state.petLogs.slice().sort(function (a, b) { return b.id.localeCompare(a.id); });
+    $("petLogCount").textContent = list.length ? "共 " + list.length + " 次" : "";
+    if (!list.length) {
+      $("petLogList").innerHTML = '<div class="empty">' + T("petLogEmpty") + "</div>";
+      return;
+    }
+    $("petLogList").innerHTML = list.slice(0, 60).map(function (l) {
+      var p = null;
+      state.pets.forEach(function (x) { if (x.id === l.petId) p = x; });
+      var tp = p ? (petTypeMap[p.type] || petTypeMap.other) : petTypeMap.other;
+      return '<div class="summary-line"><span>' + tp.icon + " " + esc(p ? p.name : "—") +
+        " · " + CARE_ICON[l.act] + T("care_" + l.act) + "</span>" +
+        '<span style="display:flex;align-items:center;gap:6px">' + esc(l.date.slice(5)) + " " + esc(l.time) +
+        '<span class="del" data-pdel2="' + l.id + '">✕</span></span></div>';
+    }).join("");
+  }
+
+  $("petList").addEventListener("click", function (e) {
+    var ds = e.target.dataset || {};
+    if (ds.pedit) { openEdit("pet", ds.pedit); return; }
+    if (ds.pdel) {
+      confirmBox(T("confirmDelPet"), function () {
+        state.pets = state.pets.filter(function (p) { return p.id !== ds.pdel; });
+        state.petLogs = state.petLogs.filter(function (l) { return l.petId !== ds.pdel; });
+        state.weights = state.weights.filter(function (w) { return w.petId !== ds.pdel; });
+        save(); renderPetAll();
+      });
+    }
+  });
+  $("petLogList").addEventListener("click", function (e) {
+    var id = e.target.dataset && e.target.dataset.pdel2;
+    if (!id) return;
+    confirmBox(T("confirmDelPetLog"), function () {
+      state.petLogs = state.petLogs.filter(function (l) { return l.id !== id; });
+      save(); renderCare(); renderPetLogs();
+    });
+  });
+
+  $("addWeightBtn").addEventListener("click", function () {
+    var petId = $("weightPet").value;
+    var kg = parseFloat($("weightKg").value);
+    if (!petId) return;
+    if (!kg || kg <= 0) { alert(T("amountBad")); return; }
+    state.weights.push({ id: uid(), petId: petId, date: ui.careDate, kg: Math.round(kg * 100) / 100 });
+    $("weightKg").value = "";
+    save(); renderWeights();
+  });
+
+  function renderWeights() {
+    var asc = state.weights.slice().sort(function (a, b) { return (a.date + a.id).localeCompare(b.date + b.id); });
+    var prev = {}, rows = [];
+    asc.forEach(function (w) {
+      var d = prev[w.petId] == null ? null : w.kg - prev[w.petId];
+      prev[w.petId] = w.kg;
+      rows.push({ w: w, d: d });
+    });
+    $("weightPetName").textContent = rows.length ? "共 " + rows.length + " 次" : "";
+    if (!rows.length) {
+      $("weightList").innerHTML = '<div class="empty" style="padding:10px 0">' + T("weightEmpty") + "</div>";
+      return;
+    }
+    $("weightList").innerHTML = rows.reverse().slice(0, 30).map(function (r) {
+      var p = null;
+      state.pets.forEach(function (x) { if (x.id === r.w.petId) p = x; });
+      var tp = p ? (petTypeMap[p.type] || petTypeMap.other) : petTypeMap.other;
+      var delta = r.d == null ? "" : (r.d > 0 ? " ▲" : r.d < 0 ? " ▼" : " —") + Math.abs(r.d).toFixed(2);
+      return '<div class="summary-line"><span>' + tp.icon + " " + esc(p ? p.name : "—") + "</span>" +
+        '<span style="display:flex;align-items:center;gap:6px">' + esc(r.w.date.slice(5)) + " · " +
+        '<b>' + r.w.kg.toFixed(2) + " kg</b>" +
+        (delta ? '<span class="' + (r.d > 0 ? "up" : "down") + '">' + delta + "</span>" : "") +
+        '<span class="del" data-wdel="' + r.w.id + '">✕</span></span></div>';
+    }).join("");
+  }
+  $("weightList").addEventListener("click", function (e) {
+    var id = e.target.dataset && e.target.dataset.wdel;
+    if (!id) return;
+    state.weights = state.weights.filter(function (w) { return w.id !== id; });
+    save(); renderWeights();
+  });
+
+  function renderPetAll() {
+    renderPetSelects();
+    renderPets();
+    renderCare();
+    renderPetLogs();
+    renderWeights();
+  }
+
+  /* ---------- 股票 ---------- */
+  function stockTotals() {
+    var mv = 0, cost = 0;
+    state.stocks.forEach(function (s) {
+      mv += (s.shares || 0) * (s.price || 0);
+      cost += (s.shares || 0) * (s.cost || 0);
+    });
+    return { mv: mv, cost: cost, pl: mv - cost, rate: cost ? (mv - cost) / cost * 100 : 0 };
+  }
+  function upDown(n) { return n > 0.005 ? "up" : (n < -0.005 ? "down" : "flat"); }
+  function fmtSigned(n) { return (n > 0.005 ? "+" : n < -0.005 ? "−" : "") + fmtMoney(Math.abs(n)); }
+  function fmtShort(n) {
+    var a = Math.abs(n);
+    if (a >= 100000) return (n / 10000).toFixed(1) + "万";
+    if (a >= 1000) return Number(Math.round(n)).toLocaleString("zh-CN");
+    return Number(n.toFixed(2)).toLocaleString("zh-CN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  function fmtShares(n) { return Number(n).toLocaleString("zh-CN"); }
+
+  function snapshotToday() {
+    if (!state.stocks.length) {
+      state.snaps = state.snaps.filter(function (s) { return s.date !== today; });
+      return;
+    }
+    var t = stockTotals();
+    var found = false;
+    state.snaps.forEach(function (s) {
+      if (s.date === today) {
+        s.mv = Math.round(t.mv * 100) / 100;
+        s.cost = Math.round(t.cost * 100) / 100;
+        found = true;
+      }
+    });
+    if (!found) {
+      state.snaps.push({ date: today, mv: Math.round(t.mv * 100) / 100, cost: Math.round(t.cost * 100) / 100 });
+    }
+  }
+
+  $("addStockBtn").addEventListener("click", function () {
+    var name = $("stockName").value.trim();
+    var shares = parseFloat($("stockShares").value);
+    var cost = parseFloat($("stockCost").value);
+    var price = parseFloat($("stockPrice").value);
+    if (!name) return;
+    if (!shares || shares <= 0) { alert(T("sharesBad")); return; }
+    if (!cost || cost < 0) { alert(T("priceNeed")); return; }
+    state.stocks.push({
+      id: uid(), name: name, code: $("stockCode").value.trim(),
+      shares: Math.round(shares * 100) / 100,
+      cost: Math.round(cost * 1000) / 1000,
+      price: Math.round((isNaN(price) ? cost : price) * 1000) / 1000
+    });
+    $("stockName").value = ""; $("stockCode").value = "";
+    $("stockShares").value = ""; $("stockCost").value = ""; $("stockPrice").value = "";
+    snapshotToday();
+    save(); renderStockAll(); renderHeaderStats();
+  });
+
+  function renderStockSum() {
+    var t = stockTotals();
+    $("stockSumText").textContent = state.stocks.length ? state.stocks.length + " 笔" : "";
+    $("stockSum").innerHTML =
+      '<div class="cell"><div class="k">' + T("stockMV") + '</div><div class="v">' + fmtMoney(t.mv) + "</div></div>" +
+      '<div class="cell"><div class="k">' + T("stockCostLbl") + '</div><div class="v">' + fmtMoney(t.cost) + "</div></div>" +
+      '<div class="cell"><div class="k">' + T("stockPL") + '</div><div class="v ' + upDown(t.pl) + '">' + fmtSigned(t.pl) + "</div></div>" +
+      '<div class="cell"><div class="k">' + T("stockPLRate") + '</div><div class="v ' + upDown(t.pl) + '">' +
+      (t.pl > 0.005 ? "+" : t.pl < -0.005 ? "−" : "") + Math.abs(t.rate).toFixed(2) + "%</div></div>";
+  }
+
+  function renderStocks() {
+    $("stockCount").textContent = state.stocks.length ? "共 " + state.stocks.length + " 笔" : "";
+    if (!state.stocks.length) {
+      $("stockList").innerHTML = '<div class="empty">' + T("stockEmpty") + "</div>";
+      return;
+    }
+    $("stockList").innerHTML = state.stocks.map(function (s) {
+      var mv = (s.shares || 0) * (s.price || 0);
+      var base = (s.shares || 0) * (s.cost || 0);
+      var pl = mv - base;
+      var rate = base ? pl / base * 100 : 0;
+      return '<div class="stock"><div class="sinfo">' +
+        '<div class="t">' + esc(s.name) + (s.code ? '<span class="code">' + esc(s.code) + "</span>" : "") + "</div>" +
+        '<div class="s">' + fmtShares(s.shares) + " × " + fmtMoney(s.cost) + " · 市值 " + fmtMoney(mv) + "</div></div>" +
+        '<div class="price" data-sedit="' + s.id + '" title="改现价">' + fmtMoney(s.price) + "</div>" +
+        '<div class="pl ' + upDown(pl) + '">' + fmtSigned(pl) + "<br>" +
+        (rate > 0 ? "+" : rate < 0 ? "−" : "") + Math.abs(rate).toFixed(2) + "%</div>" +
+        '<span class="del" data-sdel="' + s.id + '">✕</span></div>';
+    }).join("");
+  }
+
+  function renderCurve() {
+    var list = state.snaps.slice().sort(function (a, b) { return a.date < b.date ? -1 : 1; }).slice(-14);
+    if (!list.length) {
+      $("stockCurve").innerHTML = '<div class="empty">' + T("stockCurveEmpty") + "</div>";
+      return;
+    }
+    var max = Math.max.apply(null, list.map(function (s) { return s.mv; }).concat([1]));
+    $("stockCurve").innerHTML = list.map(function (s) {
+      var pct = Math.max(2, Math.round(s.mv / max * 100));
+      var up = s.mv >= s.cost;
+      return '<div class="bar-wrap"><div class="bar-label"><span>' + s.date.slice(5) +
+        '</span><span class="' + (up ? "up" : "down") + '">' + fmtMoney(s.mv) + "</span></div>" +
+        '<div class="bar-outer"><div class="bar-inner" style="width:' + pct + "%;background:linear-gradient(90deg," +
+        (up ? "var(--red),color-mix(in srgb, var(--red) 60%, #ffffff)" : "var(--green),color-mix(in srgb, var(--green) 60%, #ffffff)") +
+        ')"></div></div></div>';
+    }).join("");
+  }
+
+  function renderStockAll() {
+    renderStockSum();
+    renderStocks();
+    renderCurve();
+  }
+
+  $("stockList").addEventListener("click", function (e) {
+    var ds = e.target.dataset || {};
+    if (ds.sedit) { openEdit("stock", ds.sedit); return; }
+    if (ds.sdel) {
+      confirmBox(T("confirmDelStock"), function () {
+        state.stocks = state.stocks.filter(function (s) { return s.id !== ds.sdel; });
+        snapshotToday(); save(); renderStockAll(); renderHeaderStats();
+      });
+    }
+  });
+
+  /* ---------- 通用编辑 ---------- */
+  var editCtx = null; // { type, id }
+  function fieldHtml(f) {
+    var v = f.value == null ? "" : String(f.value);
+    if (f.type === "textarea") return '<textarea id="ef_' + f.key + '">' + esc(v) + "</textarea>";
+    if (f.type === "select") {
+      return '<select id="ef_' + f.key + '">' + f.options.map(function (o) {
+        return '<option value="' + esc(o.v) + '"' + (String(o.v) === v ? " selected" : "") + ">" + esc(o.t) + "</option>";
+      }).join("") + "</select>";
+    }
+    return '<input type="' + (f.type || "text") + '" id="ef_' + f.key + '" value="' + esc(v) + '">';
+  }
+  function fv(key) { var el = $("ef_" + key); return el ? el.value.trim() : ""; }
+
+  function openEdit(type, id) {
+    var item = null, fields = [];
+    if (type === "progress") {
+      state.progress.forEach(function (x) { if (x.id === id) item = x; });
+      if (!item) return;
+      fields = [
+        { key: "date", label: T("editDate"), type: "date", value: item.date },
+        { key: "text", label: T("editText"), type: "textarea", value: item.text }
+      ];
+    } else if (type === "idea") {
+      state.ideas.forEach(function (x) { if (x.id === id) item = x; });
+      if (!item) return;
+      var opts = [{ v: "", t: T("ideaLinkNone") }];
+      state.tasks.slice().sort(function (a, b) { return a.date < b.date ? -1 : 1; }).forEach(function (t) {
+        opts.push({ v: t.id, t: t.date.slice(5) + " · " + t.name });
+      });
+      fields = [
+        { key: "date", label: T("editDate"), type: "date", value: item.date },
+        { key: "text", label: T("editText"), type: "textarea", value: item.text },
+        { key: "task", label: T("editLink"), type: "select", options: opts, value: item.taskId || "" }
+      ];
+    } else if (type === "expense") {
+      state.expenses.forEach(function (x) { if (x.id === id) item = x; });
+      if (!item) return;
+      fields = [
+        { key: "date", label: T("editDate"), type: "date", value: item.date },
+        { key: "type", label: T("editType"), type: "select", options: [
+          { v: "expense", t: T("typeExpense") }, { v: "income", t: T("typeIncome") }
+        ], value: item.type },
+        { key: "cat", label: T("editCat"), type: "select", options: CATS.map(function (c) {
+          return { v: c.id, t: c.icon + " " + c.name };
+        }), value: item.cat || "" },
+        { key: "amount", label: T("editAmount"), type: "number", value: item.amount },
+        { key: "note", label: T("lblNote"), type: "text", value: item.note }
+      ];
+    } else if (type === "diet") {
+      state.diet.forEach(function (x) { if (x.id === id) item = x; });
+      if (!item) return;
+      fields = [
+        { key: "date", label: T("editDate"), type: "date", value: item.date },
+        { key: "meal", label: T("editMeal"), type: "select", options: MEALS.map(function (m) {
+          return { v: m, t: m };
+        }), value: item.meal },
+        { key: "text", label: T("editText"), type: "text", value: item.text }
+      ];
+    } else if (type === "pet") {
+      state.pets.forEach(function (x) { if (x.id === id) item = x; });
+      if (!item) return;
+      fields = [
+        { key: "name", label: T("editName"), type: "text", value: item.name },
+        { key: "ptype", label: T("editType"), type: "select", options: PET_TYPES.map(function (p) {
+          return { v: p.id, t: p.icon + " " + p.name };
+        }), value: item.type },
+        { key: "birth", label: T("editBirth"), type: "date", value: item.birth || "" },
+        { key: "note", label: T("lblNote"), type: "text", value: item.note || "" }
+      ];
+    } else if (type === "stock") {
+      state.stocks.forEach(function (x) { if (x.id === id) item = x; });
+      if (!item) return;
+      fields = [
+        { key: "name", label: T("editName"), type: "text", value: item.name },
+        { key: "code", label: T("editCode"), type: "text", value: item.code || "" },
+        { key: "shares", label: T("editShares"), type: "number", value: item.shares },
+        { key: "cost", label: T("editCost"), type: "number", value: item.cost },
+        { key: "price", label: T("editPrice"), type: "number", value: item.price }
+      ];
+    }
+    if (!item) return;
+    var dlgTitle = $("editDlg").querySelector("h3");
+    if (dlgTitle) dlgTitle.textContent = type === "pet" ? T("editPet") : type === "stock" ? T("editStock") : T("editEntry");
+    editCtx = { type: type, id: id };
+    $("editFields").innerHTML = fields.map(function (x) {
+      return '<label style="display:block;font-size:12px;color:var(--muted);margin:8px 0 4px">' + x.label + "</label>" + fieldHtml(x);
+    }).join("");
+    $("editDlg").showModal();
+  }
+
+  $("editCancel").addEventListener("click", function () { $("editDlg").close(); editCtx = null; });
+  $("editSave").addEventListener("click", function () {
+    if (!editCtx) { $("editDlg").close(); return; }
+    var type = editCtx.type, id = editCtx.id;
+    if (type === "progress") {
+      state.progress.forEach(function (p) {
+        if (p.id !== id) return;
+        p.date = fv("date") || p.date;
+        var t = fv("text"); if (t) p.text = t;
+      });
+      save(); renderProgress();
+    } else if (type === "idea") {
+      state.ideas.forEach(function (i) {
+        if (i.id !== id) return;
+        i.date = fv("date") || i.date;
+        var t = fv("text"); if (t) i.text = t;
+        i.taskId = fv("task") || null;
+      });
+      save(); renderIdeas();
+    } else if (type === "expense") {
+      var amt = parseFloat(fv("amount"));
+      if (!amt || amt <= 0) { alert(T("amountBad")); return; }
+      state.expenses.forEach(function (e) {
+        if (e.id !== id) return;
+        e.date = fv("date") || e.date;
+        e.type = fv("type") === "income" ? "income" : "expense";
+        e.cat = e.type === "income" ? "" : fv("cat");
+        e.amount = Math.round(amt * 100) / 100;
+        e.note = fv("note");
+      });
+      save(); renderExpenses(); renderExpenseDay(); renderHeaderStats();
+    } else if (type === "diet") {
+      state.diet.forEach(function (d) {
+        if (d.id !== id) return;
+        d.date = fv("date") || d.date;
+        d.meal = fv("meal") || d.meal;
+        var t = fv("text"); if (t) d.text = t;
+      });
+      save(); renderDiet();
+    } else if (type === "pet") {
+      state.pets.forEach(function (p) {
+        if (p.id !== id) return;
+        var nm = fv("name"); if (nm) p.name = nm;
+        p.type = fv("ptype") || p.type;
+        p.birth = fv("birth");
+        p.note = fv("note");
+      });
+      save(); renderPetAll();
+    } else if (type === "stock") {
+      var sh = parseFloat(fv("shares")), ct = parseFloat(fv("cost")), pr = parseFloat(fv("price"));
+      if (!sh || sh <= 0) { alert(T("sharesBad")); return; }
+      if (isNaN(ct) || ct < 0 || isNaN(pr) || pr < 0) { alert(T("priceNeed")); return; }
+      state.stocks.forEach(function (s) {
+        if (s.id !== id) return;
+        var nm = fv("name"); if (nm) s.name = nm;
+        s.code = fv("code");
+        s.shares = Math.round(sh * 100) / 100;
+        s.cost = Math.round(ct * 1000) / 1000;
+        s.price = Math.round(pr * 1000) / 1000;
+      });
+      snapshotToday(); save(); renderStockAll(); renderHeaderStats();
+    }
+    $("editDlg").close(); editCtx = null;
+  });
+
+  function bindEdit(listId, type) {
+    $(listId).addEventListener("click", function (e) {
+      var id = e.target.dataset && e.target.dataset.edit;
+      if (id) openEdit(type, id);
+    });
+  }
+  bindEdit("progressList", "progress");
+  bindEdit("ideaList", "idea");
+  bindEdit("expenseList", "expense");
+  bindEdit("dietList", "diet");
+
+  /* ---------- 统计 ---------- */
+  function renderStats() {
+    renderSum();
+    var monthPrefix = today.slice(0, 7);
+    $("statMonthText").textContent = monthPrefix;
+    var monthExp = {}, total = 0;
+    state.expenses.forEach(function (e) {
+      if (e.type !== "expense" || e.date.indexOf(monthPrefix) !== 0) return;
+      monthExp[e.cat] = (monthExp[e.cat] || 0) + e.amount;
+      total += e.amount;
+    });
+    var entries = Object.keys(monthExp).map(function (k) { return [k, monthExp[k]]; })
+      .sort(function (a, b) { return b[1] - a[1]; });
+    $("catBars").innerHTML = entries.length ? entries.map(function (p) {
+      var c = catMap[p[0]] || { name: p[0] };
+      var pct = total ? Math.round(p[1] / total * 100) : 0;
+      return '<div class="bar-wrap"><div class="bar-label"><span>' + c.name + "</span><span>" +
+        fmtMoney(p[1]) + " · " + pct + "%</span></div>" +
+        '<div class="bar-outer"><div class="bar-inner" style="width:' + pct + '%"></div></div></div>';
+    }).join("") : '<div class="empty">' + T("statsMonthEmpty") + "</div>";
+
+    var days = [];
+    for (var i = 6; i >= 0; i--) {
+      var d = new Date(); d.setDate(d.getDate() - i);
+      days.push(fmtDate(d));
+    }
+    var daySum = days.map(function (d) {
+      var s = 0;
+      state.expenses.forEach(function (e) { if (e.type === "expense" && e.date === d) s += e.amount; });
+      return s;
+    });
+    var max = Math.max.apply(null, daySum.concat([1]));
+    $("trendBars").innerHTML = days.map(function (d, i) {
+      var pct = Math.round(daySum[i] / max * 100);
+      return '<div class="bar-wrap"><div class="bar-label"><span>' + d.slice(5) + "</span><span>" + fmtMoney(daySum[i]) + "</span></div>" +
+        '<div class="bar-outer"><div class="bar-inner" style="width:' + pct + '%"></div></div></div>';
+    }).join("");
+
+    $("taskRate").innerHTML = days.map(function (d) {
+      var ts = state.tasks.filter(function (t) { return t.date === d; });
+      if (!ts.length) return '<div class="summary-line"><span>' + d.slice(5) + '</span><b style="color:var(--muted)">' + T("statsNone") + "</b></div>";
+      var dn = ts.filter(function (t) { return t.done; }).length;
+      var pct = Math.round(dn / ts.length * 100);
+      var color = pct === 100 ? "var(--green)" : pct >= 50 ? "var(--accent)" : "var(--orange)";
+      return '<div class="bar-wrap"><div class="bar-label"><span>' + d.slice(5) + "</span><span>" + dn + "/" + ts.length + " · " + pct + "%</span></div>" +
+        '<div class="bar-outer"><div class="bar-inner" style="width:' + pct + "%;background:" + color + '"></div></div></div>';
+    }).join("");
+  }
+
+  /* ---------- 每日总结 ---------- */
+  var sumDate = addDays(-1);
+  $("sumDate").value = sumDate;
+  $("sumDate").addEventListener("change", function () {
+    if (this.value) { sumDate = this.value; renderSum(); }
+  });
+
+  function renderSumChips() {
+    var defs = [[0, T("sumTd")], [-1, T("sumYd")], [-2, T("sum2d")]];
+    $("sumChips").innerHTML = defs.map(function (c) {
+      var d = addDays(c[0]);
+      return '<button data-sumday="' + d + '" class="' + (d === sumDate ? "on" : "") + '">' + c[1] + "</button>";
+    }).join("");
+  }
+  $("sumChips").addEventListener("click", function (e) {
+    var d = e.target.dataset && e.target.dataset.sumday;
+    if (!d) return;
+    sumDate = d; $("sumDate").value = d; renderSum();
+  });
+
+  function nextDayOf(dateStr) {
+    var d = new Date(String(dateStr).replace(/-/g, "/"));
+    d.setDate(d.getDate() + 1);
+    return fmtDate(d);
+  }
+
+  function carryTask(id) {
+    var src = null;
+    state.tasks.forEach(function (t) { if (t.id === id) src = t; });
+    if (!src || src.done || src.deferred) return;
+    state.tasks.push({
+      id: Date.now() + "" + Math.floor(Math.random() * 1e4),
+      name: src.name, date: nextDayOf(src.date), done: false,
+      progress: "", difficulty: "", note: src.note || ""
+    });
+    src.deferred = true;
+  }
+
+  $("sumBody").addEventListener("click", function (e) {
+    var ds = e.target.dataset || {};
+    if (ds.carry) {
+      carryTask(ds.carry);
+      save(); renderSum(); renderTodoAll(); renderHeaderStats();
+      return;
+    }
+    if (ds.carryall) {
+      state.tasks.filter(function (t) {
+        return t.date === sumDate && !t.done && !t.deferred;
+      }).forEach(function (t) { carryTask(t.id); });
+      save(); renderSum(); renderTodoAll(); renderHeaderStats();
+    }
+  });
+
+  function renderSum() {
+    renderSumChips();
+    var d = sumDate;
+    var wd = "周" + weekNames[new Date(d.replace(/-/g, "/")).getDay()];
+    $("sumDateText").textContent = d + " " + wd;
+
+    var tasks = state.tasks.filter(function (t) { return t.date === d; });
+    var done = tasks.filter(function (t) { return t.done; }).length;
+    var undone = tasks.filter(function (t) { return !t.done && !t.deferred; });
+    var h = "";
+
+    /* 计划与完成情况 */
+    h += '<h3 class="sum-h">' + T("sumPlans") + " · " + done + "/" + tasks.length + "</h3>";
+    if (!tasks.length) {
+      h += '<div class="sum-none">' + T("sumNone") + "</div>";
+    } else {
+      h += tasks.map(function (t) {
+        var mark = t.done ? "✅" : (t.deferred ? "↪️" : "⬜");
+        var act = (!t.done && !t.deferred)
+          ? '<span class="link-chip" data-carry="' + t.id + '" style="cursor:pointer">' + T("sumCarry") + "</span>"
+          : "";
+        return '<div class="summary-line"><span>' + mark + " " + esc(t.name) + "</span><span>" + act + "</span></div>";
+      }).join("");
+    }
+
+    /* 未完成 + 顺延 */
+    if (undone.length) {
+      h += '<h3 class="sum-h">' + T("sumUn") + " · " + undone.length + "</h3>";
+      h += undone.map(function (t) {
+        return '<div class="summary-line"><span>⬜ ' + esc(t.name) + "</span><span>" +
+          '<span class="link-chip" data-carry="' + t.id + '" style="cursor:pointer">' + T("sumCarry") + "</span></span></div>";
+      }).join("");
+      h += '<div style="margin-top:8px"><span class="link-chip" data-carryall="1" style="cursor:pointer">' +
+        T("sumCarryAll") + " → " + nextDayOf(d) + "</span></div>";
+    }
+
+    /* 花费 */
+    var dayExp = state.expenses.filter(function (x) { return x.date === d; });
+    var exp = 0, inc = 0, byCat = {};
+    dayExp.forEach(function (x) {
+      if (x.type === "income") { inc += x.amount; return; }
+      exp += x.amount;
+      var k = x.cat || "other";
+      byCat[k] = (byCat[k] || 0) + x.amount;
+    });
+    h += '<h3 class="sum-h">' + T("sumMoney") + "</h3>";
+    if (!dayExp.length) {
+      h += '<div class="sum-none">' + T("sumNone") + "</div>";
+    } else {
+      if (exp) h += '<div class="summary-line"><span>' + T("lblExpense") + '</span><b style="color:var(--red)">' + fmtMoney(exp) + "</b></div>";
+      if (inc) h += '<div class="summary-line"><span>' + T("lblIncome") + '</span><b style="color:var(--green)">' + fmtMoney(inc) + "</b></div>";
+      Object.keys(byCat).sort(function (a, b) { return byCat[b] - byCat[a]; }).forEach(function (k) {
+        var c = catMap[k] || { name: k, icon: "•" };
+        h += '<div class="summary-line"><span style="opacity:.8">' + c.icon + " " + esc(c.name) +
+          "</span><span>" + fmtMoney(byCat[k]) + "</span></div>";
+      });
+    }
+
+    /* 吃了什么 */
+    var dayDiet = state.diet.filter(function (x) { return x.date === d; });
+    h += '<h3 class="sum-h">' + T("sumDiet") + "</h3>";
+    if (!dayDiet.length) {
+      h += '<div class="sum-none">' + T("sumNone") + "</div>";
+    } else {
+      MEALS.forEach(function (m) {
+        var items = dayDiet.filter(function (x) { return x.meal === m; });
+        if (!items.length) return;
+        h += '<div class="summary-line"><span style="opacity:.8">' + m + "</span><span>" +
+          esc(items.map(function (x) { return x.text; }).join("、")) + "</span></div>";
+      });
+    }
+
+    /* 照料 */
+    var dayCare = state.petLogs.filter(function (x) { return x.date === d; });
+    h += '<h3 class="sum-h">' + T("sumPet") + "</h3>";
+    if (!dayCare.length) {
+      h += '<div class="sum-none">' + T("sumNone") + "</div>";
+    } else {
+      state.pets.forEach(function (p) {
+        var items = dayCare.filter(function (x) { return x.petId === p.id; });
+        if (!items.length) return;
+        var tally = {};
+        items.forEach(function (x) { tally[x.act] = (tally[x.act] || 0) + 1; });
+        var txt = CARE_ACTS.filter(function (a) { return tally[a]; }).map(function (a) {
+          return CARE_ICON[a] + T("care_" + a) + (tally[a] > 1 ? "×" + tally[a] : "");
+        }).join(" ");
+        h += '<div class="summary-line"><span style="opacity:.8">' + esc(p.name) + "</span><span>" + txt + "</span></div>";
+      });
+    }
+
+    /* 记录 */
+    var dayProg = state.progress.filter(function (x) { return x.date === d; });
+    h += '<h3 class="sum-h">' + T("sumRecords") + "</h3>";
+    if (!dayProg.length) {
+      h += '<div class="sum-none">' + T("sumNone") + "</div>";
+    } else {
+      dayProg.forEach(function (p) {
+        h += '<div class="sum-text">· ' + esc(p.text) + "</div>";
+      });
+    }
+
+    /* 灵感 */
+    var dayIdeas = state.ideas.filter(function (x) { return x.date === d; });
+    h += '<h3 class="sum-h">' + T("sumIdeas") + "</h3>";
+    if (!dayIdeas.length) {
+      h += '<div class="sum-none">' + T("sumNone") + "</div>";
+    } else {
+      dayIdeas.forEach(function (i) {
+        var t = i.taskId ? findTask(i.taskId) : null;
+        h += '<div class="sum-text">✦ ' + esc(i.text) +
+          (t ? ' <span class="link-chip">' + T("ideaLinkPrefix") + esc(t.name) + "</span>" : "") + "</div>";
+      });
+    }
+
+    $("sumBody").innerHTML = h;
+  }
+
+  /* ---------- 存档 ---------- */
+  $("exportBtn").addEventListener("click", function () {
+    var blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = T("filePrefix") + "_" + today + ".json";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+  $("importBtn").addEventListener("click", function () { $("importFile").click(); });
+  $("importFile").addEventListener("change", function () {
+    var file = this.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var data = JSON.parse(reader.result);
+        if (!data || !Array.isArray(data.tasks)) throw new Error("bad");
+        confirmBox(T("confirmImport"), function () {
+          state = {
+            tasks: data.tasks || [],
+            progress: data.progress || [],
+            expenses: data.expenses || [],
+            ideas: data.ideas || [],
+            diet: data.diet || [],
+            pets: data.pets || [],
+            petLogs: data.petLogs || [],
+            weights: data.weights || [],
+            stocks: data.stocks || [],
+            snaps: data.snaps || []
+          };
+          save(); renderAll();
+        });
+      } catch (e) { alert(T("importBad")); }
+    };
+    reader.readAsText(file);
+    this.value = "";
+  });
+  $("clearBtn").addEventListener("click", function () {
+    confirmBox(T("confirmClear"), function () {
+      state = {
+        tasks: [], progress: [], expenses: [], ideas: [], diet: [],
+        pets: [], petLogs: [], weights: [], stocks: [], snaps: []
+      };
+      save(); renderAll();
+    });
+  });
+
+  /* ---------- 顶部统计 ---------- */
+  function renderHeaderStats() {
+    var ts = state.tasks.filter(function (t) { return t.date === today; });
+    var dn = ts.filter(function (t) { return t.done; }).length;
+    $("statTasks").textContent = ts.length ? dn + "/" + ts.length : "0";
+    var monthPrefix = today.slice(0, 7);
+    var dayExp = 0, monthExp = 0;
+    state.expenses.forEach(function (e) {
+      if (e.type !== "expense") return;
+      if (e.date === today) dayExp += e.amount;
+      if (e.date.indexOf(monthPrefix) === 0) monthExp += e.amount;
+    });
+    $("statSpend").textContent = fmtMoney(dayExp);
+    $("statMonth").textContent = fmtMoney(monthExp);
+    var el = $("statPL");
+    if (!state.stocks.length) {
+      el.textContent = "—"; el.className = "value";
+    } else {
+      var t = stockTotals();
+      el.textContent = (t.pl > 0.005 ? "+" : t.pl < -0.005 ? "−" : "") + fmtShort(Math.abs(t.pl));
+      el.className = "value " + upDown(t.pl);
+    }
+  }
+
+  function renderAll() {
+    renderHeaderStats();
+    renderTodoAll();
+    renderProgress();
+    renderIdeas();
+    renderQuickCats();
+    renderExpenses();
+    renderExpenseDay();
+    renderDietMealChips();
+    renderDiet();
+    renderPetAll();
+    renderStockAll();
+    if (ui.tab === "stats") renderStats();
+  }
+
+  applyI18n();
+  renderThemeChips();
+  renderAll();
+
+  /* 跨零点自动更新：0 点一过，总结自动切到「昨日」，全站日期同步 */
+  var lastDay = today;
+  setInterval(function () {
+    var nd = fmtDate(new Date());
+    if (nd === lastDay) return;
+    lastDay = nd;
+    today = nd;
+    ui.todoDate = nd; ui.progressDate = nd; ui.expenseDate = nd; ui.dietDate = nd; ui.careDate = nd;
+    $("progressDate").value = nd;
+    $("expenseDate").value = nd;
+    $("dietDate").value = nd;
+    $("careDate").value = nd;
+    sumDate = addDays(-1);
+    $("sumDate").value = sumDate;
+    renderAll();
+    if (ui.tab === "stats") renderSum();
+  }, 30000);
+})();
+</script>
+</body>
+</html>
